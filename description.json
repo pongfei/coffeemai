@@ -1,0 +1,32 @@
+{
+    "coffeeList": {
+        "Espresso": {
+            "desc": "Espresso is a strong, concentrated coffee made by forcing hot water through finely-ground coffee beans, resulting in a rich flavor and a creamy foam called crema."
+        },
+        "Cappuccino": {
+            "desc": "Cappuccino is a coffee drink made with equal parts espresso, steamed milk, and milk foam, resulting in a rich, creamy beverage with a balanced flavor."
+        },
+        "Latte": {
+            "desc": "A latte is a coffee drink made with espresso and steamed milk, topped with a small amount of milk foam, offering a smooth and creamy flavor."
+        },
+        "Americano": {
+            "desc": "An Americano is a coffee drink made by diluting espresso with hot water, resulting in a milder flavor similar to brewed coffee."
+        },
+        "Macchiato": {
+            "desc": "An espresso-based coffee drink topped with a small amount of steamed milk or milk foam, offering a strong coffee flavor with a hint of creaminess."
+        },
+        "Mocha": {
+            "desc": "A coffee drink made with espresso, steamed milk, and chocolate syrup, often topped with whipped cream, combining rich coffee and chocolate flavors."
+        },
+        "Flat White": {
+            "desc": "A flat white is a coffee drink made with espresso and steamed milk, similar to a latte but with a higher coffee-to-milk ratio and a velvety microfoam texture."
+        },
+        "Cocoa": {
+            "desc": "Cocoa is a warm, sweet beverage made by mixing cocoa powder, sugar, and milk or water, often topped with whipped cream or marshmallows."
+        },
+        "Black": {
+            "desc": "Black coffee is a simple, straightforward coffee made without any added milk, cream, or sugar, highlighting the pure, robust flavor of the brewed coffee beans."
+        }
+
+    }
+}
