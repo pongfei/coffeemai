@@ -33,5 +33,5 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
-// export { db }; // Export Firestore instance for use in components
+export { db, auth }; // Export Firestore instance for use in components
   

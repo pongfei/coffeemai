@@ -61,7 +61,7 @@ export default {
   },
   methods: {
     placeOrder() {
-      const order = {
+      const order = { //creates order obj
         id: this.id,
         sweetness: this.sweetness,
         shots: this.shots,
@@ -70,10 +70,10 @@ export default {
         imgUrl: this.imgUrl,
         price: this.price
       };
-      this.addToBasket(order);
+      // this.addToBasket(order);
       alert(`Order placed with ${this.id} ${this.selectedSize} size, ${this.sweetness} level of sweetness, ${this.shots} coffee shots, ${this.milk} level of milk, and ${this.water} level of water!`);
       this.$router.push({
-        name: 'Payment',
+        name: 'WaitingPage',
         params: { id: this.id },
         query: {
           sweetness: this.sweetness,

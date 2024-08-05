@@ -1,87 +1,91 @@
 <template>
-  <div id="app" @click="closeBasketDropdown">
+  <div id="app">
     <nav>
       <div class="left">
         <img src="https://t4.ftcdn.net/jpg/05/14/51/79/360_F_514517927_dXLi1DauUmrCaE3AkElsVgJ1jaYZMcSA.jpg" alt="Expresso logo" />
-        <!-- <button class="nav-button" @click="mainPage">Main Page</button> -->
         <button class="nav-button" @click="menu">Menu</button>
       </div>
       <div class="right">
-
         <div v-if="isUserLoggedIn" class="profile-container" @click.stop="toggleProfileDropdown">
-
+          <img src="https://via.placeholder.com/35" alt="Profile" class="profile-image" />
+          <div v-if="showProfileDropdown" class="profile-dropdown">
+            <p @click="viewProfile">Profile</p>
+            <button class="logout-button" @click="logOut">Logout</button>
+          </div>
         </div>
         <button v-else class="nav-button join-now" @click="logIn">Login</button>
       </div>
     </nav>
-    
     <div class="content">
-      <router-view :add-to-basket="addToBasket"></router-view>
+      <router-view></router-view>
     </div>
   </div>
 </template>
 
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import { ref, computed, onMounted } from 'vue'
-import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth'
-import { useRouter } from 'vue-router'
+import { ref, onMounted } from 'vue';
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+import { useRouter } from 'vue-router';
 
+// Reactive properties
+const isUserLoggedIn = ref(false);
+const showProfileDropdown = ref(false);
 
+const router = useRouter();
 
 onMounted(() => {
-  const auth = getAuth()
+  const auth = getAuth();
   onAuthStateChanged(auth, user => {
     if (user) {
-      isUserLoggedIn.value = true
+      isUserLoggedIn.value = true;
     } else {
-      isUserLoggedIn.value = false
+      isUserLoggedIn.value = false;
     }
-  })
-})
+  });
+});
+
+function toggleProfileDropdown() {
+  showProfileDropdown.value = !showProfileDropdown.value;
+}
+
+function viewProfile() {
+  showProfileDropdown.value = false; // Close the dropdown
+  router.push({ name: 'UserProfile' }); // Navigate to the profile page
+}
 
 function logOut() {
-  const auth = getAuth()
+  const auth = getAuth();
   signOut(auth).then(() => {
-    isUserLoggedIn.value = false
+    isUserLoggedIn.value = false;
+    showProfileDropdown.value = false;
+    router.push('/login'); // Redirect to the login page after logout
   }).catch(error => {
-    console.error('Sign out error', error)
-  })
+    console.error('Sign out error', error);
+  });
+}
+
+function logIn() {
+  router.push('/login'); 
+}
+
+function menu(){
+  router.push('/menu')
 }
 
 </script>
 
-<script>
-export default {
-  methods: {
-    mainPage() {
-      this.$router.push("/mainPage");
-    },
-    menu() {
-      this.$router.push("/menu"); 
-    },
-    logIn() {
-      this.$router.push("/login"); 
-    }
-  },
-};
-</script>
-
 <style>
+/* Your existing styles */
 body {
   background-color: white;
   margin: 0;
   font-family: Arial, sans-serif;
-
 }
 
 #app {
-
   background-color: white;
   display: flex;
   flex-direction: column;
-
-
 }
 
 nav {
@@ -140,80 +144,15 @@ nav {
   text-decoration: underline;
 }
 
-.order-details {
-  display: flex;
-  align-items: center;
-}
-
-.order-image {
-  width: 50px;
-  height: 50px;
-  object-fit: cover;
-  border-radius: 5px;
-  margin-right: 10px;
-}
-
-.order-info {
-  flex-grow: 1;
-}
-
-.basket-dropdown p {
-  padding: 10px;
-  text-align: center;
-}
-
-.total-price {
-  padding: 10px;
-  border-top: 1px solid #ddd;
-  text-align: center;
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.payment-button {
-  background-color: #4CAF50;
-  border: none;
-  color: white;
-  padding: 10px 20px;
-  text-align: center;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  margin: 10px auto;
-  border-radius: 10px;
-  display: block;
-  width: 80%;
-}
-
-.payment-button:hover {
-  background-color: #45a049;
-}
-
-.remove-button {
-  background-color: #ff4d4d;
-  border: none;
-  color: white;
-  padding: 5px 10px;
-  cursor: pointer;
-  border-radius: 5px;
-  font-size: 12px;
-}
-
-.remove-button:hover
-
- {
-  background-color: #e60000;
-}
-
 .profile-container {
   position: relative;
+  cursor: pointer;
 }
 
 .profile-image {
   width: 35px;
   height: 35px;
   border-radius: 50%;
-  cursor: pointer;
 }
 
 .profile-dropdown {
@@ -228,6 +167,16 @@ nav {
   width: 150px;
   z-index: 10;
   text-align: center;
+}
+
+.profile-dropdown p {
+  margin: 0;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.profile-dropdown p:hover {
+  background-color: #f0f0f0;
 }
 
 .logout-button {
@@ -248,8 +197,7 @@ nav {
 .content {
   justify-content: center;
   align-items: center;
-  flex: 1; 
-  padding-top: 50px; /* to account for the fixed navbar height */
+  flex: 1;
+  padding-top: 65px; /* To account for the fixed navbar height */
 }
-
 </style>
