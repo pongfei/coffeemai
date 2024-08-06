@@ -30,15 +30,16 @@
 <script>
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useRouter } from 'vue-router';
+import { collection, onSnapshot, doc, setDoc, updateDoc, deleteDoc, getFirestore, addDoc } from "firebase/firestore";
+import { db } from '../main'; // Adjust the path if necessary
+
 
 export default {
   name: 'Customize',
-  props: ['addToBasket'],
   data() {
     return {
       id: this.$route.params.id,
       imgUrl: this.$route.query.img,
-      basePrice: parseFloat(this.$route.query.price),
       sweetness: parseInt(this.$route.query.sweetness),
       shots: parseInt(this.$route.query.shots),
       milk: parseInt(this.$route.query.milk),
@@ -60,18 +61,26 @@ export default {
     });
   },
   methods: {
-    placeOrder() {
-      const order = { //creates order obj
-        id: this.id,
-        sweetness: this.sweetness,
-        shots: this.shots,
-        milk: this.milk,
-        water: this.water,
-        imgUrl: this.imgUrl,
-        price: this.price
-      };
-      // this.addToBasket(order);
-      alert(`Order placed with ${this.id} ${this.selectedSize} size, ${this.sweetness} level of sweetness, ${this.shots} coffee shots, ${this.milk} level of milk, and ${this.water} level of water!`);
+    async placeOrder() {
+    const order = { // creates order obj
+      id: this.id,
+      sweetness: this.sweetness,
+      shots: this.shots,
+      milk: this.milk,
+      water: this.water,
+      imgUrl: this.imgUrl,
+      timestamp: new Date() // Optional: Add timestamp for order time
+    };
+
+    try {
+      // Add the order to the Firestore "orders" collection
+      const docRef = await addDoc(collection(db, 'orders'), order);
+      console.log('Document written with ID: ', docRef.id);
+
+      // Show success message or perform further actions
+      alert(`Order placed with ${this.id}. Sweetness: ${this.sweetness}, Shots: ${this.shots}, Milk: ${this.milk}, Water: ${this.water}`);
+
+      // Navigate to the waiting page or another route
       this.$router.push({
         name: 'WaitingPage',
         params: { id: this.id },
@@ -80,12 +89,14 @@ export default {
           shots: this.shots,
           milk: this.milk,
           water: this.water,
-          size: this.selectedSize,
-          price: this.price
         }
       });
-      console.log("is it sending?? " + this.id);
+
+      console.log("Order details:", order);
+    } catch (e) {
+      console.error('Error adding document: ', e);
     }
+  }
   }
 };
 </script>
