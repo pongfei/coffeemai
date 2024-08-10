@@ -16,6 +16,10 @@ const router = createRouter({
     //   component: HomeView
     // },
     {
+      path: '/:catchAll(.*)',
+      redirect: '/login',
+    },
+    {
       path: '/menu',
       name: 'Menu',
       component: Menu
@@ -23,7 +27,8 @@ const router = createRouter({
     {
       path: '/customize/:id',
       name: 'Customize',
-      component: Customize
+      component: Customize,
+      meta: { requiresAuth: true }
     },
     {
       path: '/login',
@@ -39,11 +44,15 @@ const router = createRouter({
       path: '/WaitingPage',
       name: 'WaitingPage',
       component: WaitingPage,
+      meta: { requiresAuth: true }
+
     },
     {
       path: '/UserProfile',
       name: 'UserProfile',
       component: UserProfile,
+      meta: { requiresAuth: true }
+
     },
     // {
     //   path: '/about',

@@ -5,7 +5,7 @@
         <p class="quote">"Espress Yourself."</p>
       </div>
       <div class="form-side">
-        <h2> Welcome Back</h2>
+        <h2> Welcome Back </h2>
         <br>
         <p>Enter your account credentials to view your orders</p>
         <form @submit.prevent="login"> <!-- this calls login method--> 
@@ -62,7 +62,7 @@
         this.xhrRequest = true;
         signInWithEmailAndPassword(auth, this.formData.email, this.formData.password)
           .then(user => {
-            this.$router.replace('/mainPage');
+            this.$router.replace('/menu');
             this.xhrRequest = false;
           })
           .catch(error => {
