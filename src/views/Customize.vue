@@ -30,9 +30,8 @@
 <script>
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useRouter } from 'vue-router';
-import { collection, onSnapshot, doc, setDoc, updateDoc, deleteDoc, getFirestore, addDoc } from "firebase/firestore";
+import { collection, addDoc, getFirestore } from "firebase/firestore";
 import { db } from '../main'; // Adjust the path if necessary
-
 
 export default {
   name: 'Customize',
@@ -60,43 +59,51 @@ export default {
       }
     });
   },
+
   methods: {
     async placeOrder() {
-    const order = { // creates order obj
-      id: this.id,
-      sweetness: this.sweetness,
-      shots: this.shots,
-      milk: this.milk,
-      water: this.water,
-      imgUrl: this.imgUrl,
-      timestamp: new Date() // Optional: Add timestamp for order time
-    };
+      const user = this.auth.currentUser; // Get the current user
+      if (!user) {
+        console.error('No user is logged in.');
+        return;
+      }
 
-    try {
-      // Add the order to the Firestore "orders" collection
-      const docRef = await addDoc(collection(db, 'orders'), order);
-      console.log('Document written with ID: ', docRef.id);
+      const order = { // creates order object
+        email: user.email, // Add the user's email to the order
+        id: this.id,
+        sweetness: this.sweetness,
+        shots: this.shots,
+        milk: this.milk,
+        water: this.water,
+        imgUrl: this.imgUrl,
+        timestamp: new Date() // Optional: Add timestamp for order time
+      };
 
-      // Show success message or perform further actions
-      alert(`Order placed with ${this.id}. Sweetness: ${this.sweetness}, Shots: ${this.shots}, Milk: ${this.milk}, Water: ${this.water}`);
+      try {
+        // Add the order to the Firestore "orders" collection
+        const docRef = await addDoc(collection(db, 'orders'), order);
+        console.log('Document written with ID: ', docRef.id);
 
-      // Navigate to the waiting page or another route
-      this.$router.push({
-        name: 'WaitingPage',
-        params: { id: this.id },
-        query: {
-          sweetness: this.sweetness,
-          shots: this.shots,
-          milk: this.milk,
-          water: this.water,
-        }
-      });
+        // Show success message or perform further actions
+        alert(`Order placed for ${this.id}. Sweetness: ${this.sweetness}, Shots: ${this.shots}, Milk: ${this.milk}, Water: ${this.water}`);
 
-      console.log("Order details:", order);
-    } catch (e) {
-      console.error('Error adding document: ', e);
+        // Navigate to the waiting page or another route
+        this.$router.push({
+          name: 'WaitingPage',
+          params: { id: this.id },
+          query: {
+            sweetness: this.sweetness,
+            shots: this.shots,
+            milk: this.milk,
+            water: this.water,
+          }
+        });
+
+        console.log("Order details:", order);
+      } catch (e) {
+        console.error('Error adding document: ', e);
+      }
     }
-  }
   }
 };
 </script>
