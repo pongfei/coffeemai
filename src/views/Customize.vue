@@ -69,7 +69,7 @@ export default {
       }
 
       const order = { // creates order object
-        email: user.email, // Add the user's email to the order
+        email: user.email, 
         id: this.id,
         sweetness: this.sweetness,
         shots: this.shots,
@@ -84,7 +84,7 @@ export default {
         const docRef = await addDoc(collection(db, 'orders'), order);
         console.log('Document written with ID: ', docRef.id);
 
-        // Show success message or perform further actions
+        // Show alert message 
         alert(`Order placed for ${this.id}. Sweetness: ${this.sweetness}, Shots: ${this.shots}, Milk: ${this.milk}, Water: ${this.water}`);
 
         // Navigate to the waiting page or another route
