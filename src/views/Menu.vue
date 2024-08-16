@@ -1,4 +1,7 @@
 <template>
+
+  <div class= "heading"> <h1> Coffee Mai Menu </h1> 
+  </div>
     <div class="container mt-5">
       <div class="row">
         <div class="col-md-4" v-for="(card, index) in menu" :key="index">
@@ -15,7 +18,7 @@
             <div class="card-body">
               <div class="order">
                 <!-- <router-link :to ="{name: 'Customize', params: {id: card.id}}"> Order Now </router-link> -->
-                <router-link :to="{ name: 'Customize', params: { id: card.id }, query: { img: card.img ,sweetness: card.presets.sweetness, shots: card.presets.shots, milk: card.presets.milk, water: card.presets.water} }" class="order-button">Order Now</router-link>
+                <router-link :to="{ name: 'Customize', params: { id: card.id, img: card.img  }, query: { img: card.img ,sweetness: card.presets.sweetness, shots: card.presets.shots, milk: card.presets.milk, water: card.presets.water} }" class="order-button">Order Now</router-link>
               </div>
             </div>
           </div>
@@ -28,7 +31,7 @@
   import axios from 'axios';
 
   export default {
-    name: 'Menu',
+    name: 'Menu', 
     data() {
       return {
         // Description of each beverage is fetched from the description.json file
@@ -130,6 +133,18 @@
   </script>
   
   <style>
+
+  .heading{
+    text-align: center;
+    margin-top: 5%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    font: Sans-serif;
+    border-style: solid;
+    border-color: rgb(182, 91, 1);
+    border-radius: 25px;
+
+  }
   .container {
     display: flex;
     justify-content: center;

@@ -26,10 +26,11 @@ const router = createRouter({
       component: Menu
     },
     {
-      path: '/customize/:id',
+      path: '/customize/:id/:img',
       name: 'Customize',
       component: Customize,
-      meta: { requiresAuth: true }
+      meta: { requiresAuth: true },
+      // props: true
     },
     {
       path: '/login',

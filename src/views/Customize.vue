@@ -2,8 +2,7 @@
   <!-- <p> the drink id is {{ $route.params.id }}</p> -->
   <div v-if="isLoggedIn" class="customize-page">
     <h1>Customize Your Drink</h1>
-    <img :src="imgUrl" alt="Menu Item Image" class="menu-item-image">
-    <p>{{ id }}</p>
+    <img :src="imgUrl + '.jpg'" alt="Menu Item Image" class="menu-item-image">    <p>{{ id }}</p>
 
     <!-- Slider part -->
     <div class="slider-container">
@@ -25,6 +24,7 @@
   <div v-else>
     <p>You need to log in to access this page.</p>
   </div>
+
 </template>
 
 <script>
@@ -38,7 +38,7 @@ export default {
   data() {
     return {
       id: this.$route.params.id,
-      imgUrl: this.$route.query.img,
+      imgUrl: this.$route.params.img,
       sweetness: parseInt(this.$route.query.sweetness),
       shots: parseInt(this.$route.query.shots),
       milk: parseInt(this.$route.query.milk),
@@ -49,7 +49,8 @@ export default {
   },
 
   created() {
-    const router = useRouter();
+    console.log('Route params:', this.$route.params);
+    console.log('Route query:', this.$route.query);    const router = useRouter();
     onAuthStateChanged(this.auth, (user) => {
       if (user) {
         this.isLoggedIn = true;
