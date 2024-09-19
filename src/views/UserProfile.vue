@@ -1,6 +1,7 @@
 <template>
     <div class="user-profile">
       <h2>User Profile</h2>
+      <br> <br>
       <div class="profile-info">
         <p><strong>Email:</strong> {{ user.email }}</p>
         <p><strong>Password:</strong> {{ user.password }}</p>
@@ -28,7 +29,7 @@
     data() {
       return {
         user: {
-          email: '',
+          email: null,
           password:''
         },
         orders: []
@@ -41,9 +42,9 @@
     },
     methods: {
       async fetchUserProfile() {
-        const auth = getAuth();
+        const auth = getAuth(); //initialize instance
         const db = getFirestore();
-        const user = auth.currentUser;
+        const user = auth.currentUser; //returns obj of authenticated user
   
         if (user) {
           const userDocRef = doc(db, 'users', user.uid);
@@ -76,7 +77,8 @@
         } else {
           console.log('No user is logged in');
         }
-      }
+      },
+      
     }
   };
   </script>

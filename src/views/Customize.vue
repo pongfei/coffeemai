@@ -50,7 +50,8 @@ export default {
 
   created() {
     console.log('Route params:', this.$route.params);
-    console.log('Route query:', this.$route.query);    const router = useRouter();
+    console.log('Route query:', this.$route.query);    
+    const router = useRouter();
     onAuthStateChanged(this.auth, (user) => {
       if (user) {
         this.isLoggedIn = true;
@@ -71,12 +72,12 @@ export default {
 
       const order = { // creates order object
         email: user.email, 
-        id: this.id,
+        menu: this.id,
         sweetness: this.sweetness,
         shots: this.shots,
         milk: this.milk,
         water: this.water,
-        imgUrl: this.imgUrl,
+        // imgUrl: this.imgUrl,
         timestamp: new Date() // Optional: Add timestamp for order time
       };
 

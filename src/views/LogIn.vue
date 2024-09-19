@@ -11,15 +11,13 @@
         <form @submit.prevent="login"> <!-- this calls login method--> 
           <div class="input-group">
             <label for="email">Email</label>
-            <input type="email" id="email" v-model="formData.email" required />
+            <input type="email" id="email" v-model="formData.email" placeholder = "email " required />
+            <!-- <input type ="something" id="something" v-model="formData" placeholder="something"> -->
           </div>
           <div class="input-group">
             <label for="password">Password</label>
-            <input type="password" id="password" v-model="formData.password" required />
+            <input type="password" id="password" v-model="formData.password" placeholder = "password "required />
           </div>
-          <div class="forgot-password">
-            <a href="#">Forgot your password?</a>
-          </div>  
           <button type="submit" class="login-button">Log In</button>
         </form>
         <div class="social-login">
@@ -34,52 +32,97 @@
       </div>
     </div>
   </template>
-  
+
   <script>
-  import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-  
-  export default {
-    name: 'LogIn',
-    data() {
-      return {
-        formData: {
-          email: '',
-          password: ''
-        },
-        errorMessage: '',
-        successMessage: '',
-        xhrRequest: false
-      };
-    },
-    methods: {
-      login() {
-        this.errorMessage = '';
-        if (!this.isValidEmail(this.formData.email)) {
-          this.errorMessage = 'Please enter a valid email address.';
+import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { getFirestore, doc, getDoc, setDoc, onSnapshot } from 'firebase/firestore';
+// const auth = getAuth();
+
+// router.beforeEach((to, from, next) => {
+//   const user = auth.currentUser;
+//   if(to.path == '/Login' && user){
+//     this.$router.replace('/menu')
+//   }
+// });
+
+export default {
+  name: 'LogIn',
+  data() {
+    return {
+      formData: {
+        email: '',
+        password: ''
+      },
+      errorMessage: '',
+      xhrRequest: false,
+      globalSessionActive: false, // Track session status locally
+    };
+  },
+  methods: {
+    async login() {
+      this.errorMessage = '';
+      const auth = getAuth();
+      const db = getFirestore();
+      const globalSessionRef = doc(db, 'globalSession', 'currentSession');
+
+      try {
+        // Check if any user is currently logged in
+        const sessionSnap = await getDoc(globalSessionRef);
+        if (sessionSnap.exists() && sessionSnap.data().isLoggedIn) {
+          this.errorMessage = 'Another user is currently logged in. Please wait for them to log out before you can log in.';
           return;
         }
-        const auth = getAuth();
+
+        // Sign in the user
         this.xhrRequest = true;
-        signInWithEmailAndPassword(auth, this.formData.email, this.formData.password)
-          .then(user => {
-            this.$router.replace('/menu');
-            this.xhrRequest = false;
-          })
-          .catch(error => {
-            this.errorMessage = error.message;
-            this.xhrRequest = false;
-          });
-      },
-      isValidEmail(email) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
-      },
-      // loginGoogle() {
-      //   // Implement Google sign-in logic here
-      // }
+        const userCredential = await signInWithEmailAndPassword(auth, this.formData.email, this.formData.password);
+
+        // Update global session tracker
+        await setDoc(globalSessionRef, { isLoggedIn: true, email: this.formData.email }, { merge: true });
+
+        // Redirect to the menu page
+        this.$router.replace('/menu');
+      } catch (error) {
+        this.errorMessage = error.message;
+      } finally {
+        this.xhrRequest = false;
+      }
+    },
+    async logout() {
+      const auth = getAuth();
+      const user = auth.currentUser;
+      const db = getFirestore();
+      const globalSessionRef = doc(db, 'globalSession', 'currentSession');
+
+      if (user) {
+        // Clear the global session tracker
+        await setDoc(globalSessionRef, { isLoggedIn: false }, { merge: true });
+
+        // Sign out the user
+        await signOut(auth);
+        console.log('User signed out');
+      }
+    },
+    monitorGlobalSession() {
+      const db = getFirestore();
+      const globalSessionRef = doc(db, 'globalSession', 'currentSession');
+
+      // Listen for changes to the global session
+      onSnapshot(globalSessionRef, (doc) => {
+        if (doc.exists()) {
+          this.globalSessionActive = doc.data().isLoggedIn;
+        }
+      });
     }
-  };
-  </script>
+  },
+  created() {
+    // Listen for global session changes when the component is created
+    this.monitorGlobalSession();
+  }
+};
+</script>
+
+
   
   <style scoped>
   .login-container {

@@ -26,6 +26,7 @@
 import { ref, onMounted } from 'vue';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { useRouter } from 'vue-router';
+import { getFirestore, doc, getDoc, setDoc, onSnapshot } from 'firebase/firestore';
 
 // Reactive properties
 const isUserLoggedIn = ref(false);
@@ -55,13 +56,20 @@ function viewProfile() {
 
 function logOut() {
   const auth = getAuth();
+  const db = getFirestore();
+  const globalSessionRef = doc(db, 'globalSession', 'currentSession');
+
   signOut(auth).then(() => {
     isUserLoggedIn.value = false;
     showProfileDropdown.value = false;
     router.push('/login'); // Redirect to the login page after logout
+    setDoc(globalSessionRef, { isLoggedIn: false }, { merge: true });
+
   }).catch(error => {
     console.error('Sign out error', error);
   });
+
+  
 }
 
 function logIn() {
@@ -70,6 +78,22 @@ function logIn() {
 
 function menu(){
   router.push('/menu')
+}
+
+function monitorGlobalSession() {
+      const db = getFirestore();
+      const globalSessionRef = doc(db, 'globalSession', 'currentSession');
+
+      // Listen for changes to the global session
+      onSnapshot(globalSessionRef, (doc) => {
+        if (doc.exists()) {
+          this.globalSessionActive = doc.data().isLoggedIn;
+        }
+      });
+    }
+
+function created(){
+  this.monitorGlobalSession();
 }
 
 </script>
