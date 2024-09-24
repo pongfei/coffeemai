@@ -6,6 +6,16 @@
         <button class="nav-button" @click="menu">Menu</button>
       </div>
       <div class="right">
+
+        <!-- timer  -->
+      <div class = "timer">
+          <div v-if="timerLogin">
+            
+          <p> Time Left: {{ timeLeft }} seconds</p>
+          <p></p>
+        </div>
+      </div>
+
         <div v-if="isUserLoggedIn" class="profile-container" @click.stop="toggleProfileDropdown">
           <img src="https://via.placeholder.com/35" alt="Profile" class="profile-image" />
           <div v-if="showProfileDropdown" class="profile-dropdown">
@@ -23,27 +33,61 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, stop } from 'vue';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { useRouter } from 'vue-router';
 import { getFirestore, doc, getDoc, setDoc, onSnapshot } from 'firebase/firestore';
 
-// Reactive properties
+// Reactive properties instead of export default
 const isUserLoggedIn = ref(false);
 const showProfileDropdown = ref(false);
-
 const router = useRouter();
 
+const timerLogin = ref(true);
+const timeLeft = ref(20);
+const timer = ref(null);
+
+
 onMounted(() => {
+  // timer.value = 10
   const auth = getAuth();
   onAuthStateChanged(auth, user => {
     if (user) {
       isUserLoggedIn.value = true;
+      startTimer()
     } else {
       isUserLoggedIn.value = false;
+      stopTimer()
     }
   });
 });
+
+
+// Timer logic
+function startTimer() {
+  if (timer.value) {
+    clearInterval(timer.value); //clear timer
+  }
+
+  timer.value = setInterval(() => {   // Start a new timer
+    if (timeLeft.value) {
+      timeLeft.value--;
+    } else {
+      clearInterval(timer.value);
+      logOut(); // Auto-logout 
+    }
+  }, 1000); // Run every second
+}
+
+
+function stopTimer() {
+  if (timer.value) {
+    clearInterval(timer.value);  // Stop the interval
+    timer.value = null;          // Clear the timer reference
+  }
+  timeLeft.value = 20;  // Reset the time 
+  // console.log("Timer stopped and reset to 10 seconds.");
+}
 
 function toggleProfileDropdown() {
   showProfileDropdown.value = !showProfileDropdown.value;
@@ -135,6 +179,12 @@ nav {
 .right {
   display: flex;
   align-items: center;
+}
+
+.timer{
+  font-size: large;
+  padding-right: 150px;
+  padding-top: 20px;
 }
 
 .left img {
