@@ -2,7 +2,8 @@
   <!-- <p> the drink id is {{ $route.params.id }}</p> -->
   <div v-if="isLoggedIn" class="customize-page">
     <h1>Customize Your Drink</h1>
-    <img :src="imgUrl + '.jpg'" alt="Menu Item Image" class="menu-item-image">    <p>{{ id }}</p>
+    <img :src="imgUrl" alt="Menu Item Image" class="menu-item-image">
+    <p>{{ id }}</p>
 
     <!-- Slider part -->
     <div class="slider-container">
@@ -15,8 +16,8 @@
       <label for="milk">Milk Level: {{ milk }}</label>
       <input type="range" id="milk" v-model="milk" min="0" max="5" step="1"/>
 
-      <label for="water">Water Level: {{ water }}</label>
-      <input type="range" id="water" v-model="water" min="0" max="5" step="1"/>
+      <!-- <label for="water">Water Level: {{ water }}</label>
+      <input type="range" id="water" v-model="water" min="0" max="5" step="1"/> -->
     </div>
 
     <div class="order"><button @click="placeOrder"> Order </button> </div>
@@ -38,11 +39,11 @@ export default {
   data() {
     return {
       id: this.$route.params.id,
-      imgUrl: this.$route.params.img,
+      imgUrl: null,
       sweetness: parseInt(this.$route.query.sweetness),
       shots: parseInt(this.$route.query.shots),
       milk: parseInt(this.$route.query.milk),
-      water: parseInt(this.$route.query.water),
+      // water: parseInt(this.$route.query.water),
       isLoggedIn: false,
       auth: getAuth(),
     };
@@ -50,7 +51,9 @@ export default {
 
   created() {
     console.log('Route params:', this.$route.params);
-    console.log('Route query:', this.$route.query);    
+    console.log('Route query:', this.$route.query); 
+    this.imgUrl = this.$route.query.img;  
+    console.log(this.imgUrl) 
     const router = useRouter();
     onAuthStateChanged(this.auth, (user) => {
       if (user) {
@@ -63,6 +66,7 @@ export default {
   },
 
   methods: {
+
     async placeOrder() {
       const user = this.auth.currentUser; // Get the current user
       if (!user) {
@@ -76,12 +80,20 @@ export default {
         sweetness: this.sweetness,
         shots: this.shots,
         milk: this.milk,
-        water: this.water,
+        // water: this.water,
         // imgUrl: this.imgUrl,
         timestamp: new Date() // Optional: Add timestamp for order time
       };
 
       try {
+          if (confirm("Do you wish to proceed?")) {
+          // User clicked "OK"
+          console.log("User confirmed.");
+        } else {
+          // User clicked "Cancel"
+          window.location.reload();
+          console.log("User canceled.");
+        }
         // Add the order to the Firestore "orders" collection
         const docRef = await addDoc(collection(db, 'orders'), order);
         console.log('Document written with ID: ', docRef.id);
@@ -97,7 +109,7 @@ export default {
             sweetness: this.sweetness,
             shots: this.shots,
             milk: this.milk,
-            water: this.water,
+            // water: this.water,
           }
         });
 
