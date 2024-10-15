@@ -6,15 +6,10 @@
         <button class="nav-button" @click="menu">Menu</button>
       </div>
       <div class="right">
-
-        <!-- timer  -->
-      <div class = "timer">
-          <div v-if="timerLogin">
-            
-          <p> Time Left: {{ timeLeft }} seconds</p>
-          <p></p>
+        <!-- Timer -->
+        <div class="timer" v-if="timerLogin">
+          <p>Time Left: {{ timeLeft }} seconds</p>
         </div>
-      </div>
 
         <div v-if="isUserLoggedIn" class="profile-container" @click.stop="toggleProfileDropdown">
           <img src="https://via.placeholder.com/35" alt="Profile" class="profile-image" />
@@ -33,10 +28,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted, stop } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { useRouter } from 'vue-router';
-import { getFirestore, doc, getDoc, setDoc, onSnapshot } from 'firebase/firestore';
+import { getFirestore, doc, setDoc, onSnapshot } from 'firebase/firestore';
 
 // Reactive properties instead of export default
 const isUserLoggedIn = ref(false);
@@ -44,58 +39,70 @@ const showProfileDropdown = ref(false);
 const router = useRouter();
 
 const timerLogin = ref(true);
-const timeLeft = ref(20);
+const timeLeft = ref(10); // Set the timer to 10 seconds for testing
 const timer = ref(null);
 
-
 onMounted(() => {
-  // timer.value = 10
   const auth = getAuth();
-  onAuthStateChanged(auth, user => {
+  onAuthStateChanged(auth, (user) => {
     if (user) {
       isUserLoggedIn.value = true;
-      startTimer()
+      startTimer();
     } else {
       isUserLoggedIn.value = false;
-      stopTimer()
+      stopTimer();
     }
   });
+
+  // Reset time
+  window.addEventListener('mousemove', resetIdleTimer);
+  window.addEventListener('keydown', resetIdleTimer);
+  window.addEventListener('click', resetIdleTimer);
 });
 
+// Clean up event listeners when the component is destroyed
+//just before
+onUnmounted(() => {
+  window.removeEventListener('mousemove', resetIdleTimer);
+  window.removeEventListener('keydown', resetIdleTimer);
+  window.removeEventListener('click', resetIdleTimer);
+  stopTimer();
+});
 
 // Timer logic
 function startTimer() {
-  if (timer.value) {
-    clearInterval(timer.value); //clear timer
-  }
-
-  timer.value = setInterval(() => {   // Start a new timer
-    if (timeLeft.value) {
+  stopTimer(); // Clear any existing timer
+  timer.value = setInterval(() => {
+    if (timeLeft.value > 0) {
       timeLeft.value--;
     } else {
-      clearInterval(timer.value);
-      logOut(); // Auto-logout 
+      clearInterval(timer.value); // Stop the timer
+      logOut(); // Automatically log out when time runs out
     }
   }, 1000); // Run every second
 }
 
-
 function stopTimer() {
   if (timer.value) {
-    clearInterval(timer.value);  // Stop the interval
-    timer.value = null;          // Clear the timer reference
+    clearInterval(timer.value); // Stop the timer
+    timer.value = null;
   }
-  timeLeft.value = 20;  // Reset the time 
-  // console.log("Timer stopped and reset to 10 seconds.");
+  timeLeft.value = 10; // Reset the timer (can adjust the value)
 }
 
+function resetIdleTimer() {
+  stopTimer(); // Reset the timer
+  startTimer(); // Start a new timer
+}
+
+// Profile dropdown and logout functions
 function toggleProfileDropdown() {
   showProfileDropdown.value = !showProfileDropdown.value;
 }
 
 function viewProfile() {
-  showProfileDropdown.value = false; // Close the dropdown
-  router.push({ name: 'UserProfile' }); // Navigate to the profile page
+  showProfileDropdown.value = false;
+  router.push({ name: 'UserProfile' });
 }
 
 function logOut() {
@@ -103,43 +110,39 @@ function logOut() {
   const db = getFirestore();
   const globalSessionRef = doc(db, 'globalSession', 'currentSession');
 
-  signOut(auth).then(() => {
-    isUserLoggedIn.value = false;
-    showProfileDropdown.value = false;
-    router.push('/login'); // Redirect to the login page after logout
-    setDoc(globalSessionRef, { isLoggedIn: false }, { merge: true });
-
-  }).catch(error => {
-    console.error('Sign out error', error);
-  });
-
-  
+  signOut(auth)
+    .then(() => {
+      isUserLoggedIn.value = false;
+      showProfileDropdown.value = false;
+      router.push('/login');
+      setDoc(globalSessionRef, { isLoggedIn: false }, { merge: true });
+    })
+    .catch((error) => {
+      console.error('Sign out error', error);
+    });
 }
 
+// Navigation functions
 function logIn() {
-  router.push('/login'); 
+  router.push('/login');
 }
 
-function menu(){
-  router.push('/menu')
+function menu() {
+  router.push('/menu');
 }
 
+// Monitor global session (if needed for your use case)
 function monitorGlobalSession() {
-      const db = getFirestore();
-      const globalSessionRef = doc(db, 'globalSession', 'currentSession');
+  const db = getFirestore();
+  const globalSessionRef = doc(db, 'globalSession', 'currentSession');
 
-      // Listen for changes to the global session
-      onSnapshot(globalSessionRef, (doc) => {
-        if (doc.exists()) {
-          this.globalSessionActive = doc.data().isLoggedIn;
-        }
-      });
+  // Listen for changes to the global session
+  onSnapshot(globalSessionRef, (doc) => {
+    if (doc.exists()) {
+      globalSessionActive.value = doc.data().isLoggedIn;
     }
-
-function created(){
-  this.monitorGlobalSession();
+  });
 }
-
 </script>
 
 <style>
