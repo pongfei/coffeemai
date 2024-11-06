@@ -17,7 +17,7 @@
       <div v-else>
         <p>No orders found.</p>
       </div>
-    </div>
+    </div>                
   </template>
   
   <script>

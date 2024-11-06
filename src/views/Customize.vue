@@ -98,6 +98,9 @@ export default {
         const docRef = await addDoc(collection(db, 'orders'), order);
         console.log('Document written with ID: ', docRef.id);
 
+        //send to flask AI part
+        this.recommendMenu //'this' refers to recommentMenu function
+
         // Show alert message 
         alert(`Order placed for ${this.id}. Sweetness: ${this.sweetness}, Shots: ${this.shots}, Milk: ${this.milk}, Water: ${this.water}`);
 
@@ -117,7 +120,12 @@ export default {
       } catch (e) {
         console.error('Error adding document: ', e);
       }
-    }
+    },
+    async recommendMenu(){
+      //call flask api for AI part
+    },
+
+
   }
 };
 </script>

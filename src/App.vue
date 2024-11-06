@@ -8,7 +8,7 @@
       <div class="right">
         <!-- Timer -->
         <div class="timer" v-if="timerLogin">
-          <p>Time Left: {{ timeLeft }} seconds</p>
+          <!-- <p>Time Left: {{ timeLeft }} seconds</p> -->
         </div>
 
         <div v-if="isUserLoggedIn" class="profile-container" @click.stop="toggleProfileDropdown">
@@ -55,45 +55,44 @@ onMounted(() => {
   });
 
   // Reset time
-  window.addEventListener('mousemove', resetIdleTimer);
-  window.addEventListener('keydown', resetIdleTimer);
-  window.addEventListener('click', resetIdleTimer);
+  // window.addEventListener('mousemove', resetIdleTimer);
+  // window.addEventListener('keydown', resetIdleTimer);
+  // window.addEventListener('click', resetIdleTimer);
 });
 
-// Clean up event listeners when the component is destroyed
-//just before
-onUnmounted(() => {
-  window.removeEventListener('mousemove', resetIdleTimer);
-  window.removeEventListener('keydown', resetIdleTimer);
-  window.removeEventListener('click', resetIdleTimer);
-  stopTimer();
-});
+// Clean up event listeners when the component is destroyed just before
+// onUnmounted(() => {
+//   window.removeEventListener('mousemove', resetIdleTimer);
+//   window.removeEventListener('keydown', resetIdleTimer);
+//   window.removeEventListener('click', resetIdleTimer);
+//   stopTimer();
+// });
 
 // Timer logic
-function startTimer() {
-  stopTimer(); // Clear any existing timer
-  timer.value = setInterval(() => {
-    if (timeLeft.value > 0) {
-      timeLeft.value--;
-    } else {
-      clearInterval(timer.value); // Stop the timer
-      logOut(); // Automatically log out when time runs out
-    }
-  }, 1000); // Run every second
-}
+// function startTimer() {
+//   stopTimer(); // Clear any existing timer
+//   timer.value = setInterval(() => {
+//     if (timeLeft.value > 0) {
+//       timeLeft.value--;
+//     } else {
+//       clearInterval(timer.value); // Stop the timer
+//       logOut(); // Automatically log out when time runs out
+//     }
+//   }, 1000); // Run every second
+// }
 
-function stopTimer() {
-  if (timer.value) {
-    clearInterval(timer.value); // Stop the timer
-    timer.value = null;
-  }
-  timeLeft.value = 10; // Reset the timer (can adjust the value)
-}
+// function stopTimer() {
+//   if (timer.value) {
+//     clearInterval(timer.value); // Stop the timer
+//     timer.value = null;
+//   }
+//   timeLeft.value = 10; // Reset the timer (can adjust the value)
+// }
 
-function resetIdleTimer() {
-  stopTimer(); // Reset the timer
-  startTimer(); // Start a new timer
-}
+// function resetIdleTimer() {
+//   stopTimer(); // Reset the timer
+//   startTimer(); // Start a new timer
+// }
 
 // Profile dropdown and logout functions
 function toggleProfileDropdown() {

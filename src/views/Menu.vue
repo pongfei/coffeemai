@@ -18,6 +18,7 @@
             <div class="card-body">
               <div class="order">
                 <!-- <router-link :to ="{name: 'Customize', params: {id: card.id}}"> Order Now </router-link> -->
+                 <!-- send it to customize page -->
                 <router-link :to="{ name: 'Customize', params: { id: card.id, img: card.img  }, query: { img: card.img ,sweetness: card.presets.sweetness, shots: card.presets.shots, milk: card.presets.milk, water: card.presets.water} }" class="order-button">Order Now</router-link>
               </div>
             </div>
@@ -40,7 +41,7 @@
             id: 'Espresso',
             img: 'espresso.jpg',
             title: 'Espresso',
-            text: '',
+            text: "Espresso is a strong, concentrated coffee made by forcing hot water through finely-ground coffee beans, resulting in a rich flavor and creamy foam.",
             items: ['Milk 0 ml', 'Caffeine 63 mg', 'Sugar 0 ml'],
             calories: 5,
             presets:{
@@ -54,7 +55,7 @@
             id: 'Cappuccino',
             img: 'cappucino.jpg',
             title: 'Cappuccino',
-            text: '',
+            text: "Cappuccino is a coffee drink made with equal parts espresso, steamed milk, and milk foam, resulting in a rich, creamy beverage flavor.",
             items: ['Espresso: 30 ml', 'Milk: 60 ml (steamed milk)', 'Sugar: 0-15 g '],
             calories: 80,
             presets:{
@@ -68,7 +69,7 @@
             id: 'Latte',
             img: 'latte.jpg',
             title: 'Latte',
-            text: '',
+            text: "A latte is a coffee drink made with espresso and steamed milk, topped with a small amount of milk foam, offering a smooth and creamy flavor.",
             items: ['Espresso: 30 ml ', 'Milk: 210 ml (steamed milk)', 'Sugar: 0-15 g'],
             calories: 160,
             presets:{
@@ -82,7 +83,7 @@
             id: 'Americano',
             img: 'americano.jpeg',
             title: 'Americano',
-            text: '',
+            text: "An Americano is a coffee drink made by diluting espresso with hot water, resulting in a milder flavor similar to brewed coffee.",
             items: ['Espresso: 30 ml', 'Milk: 0 ml', 'Sugar: 0 g'],
             calories: 5,
             presets:{
@@ -96,7 +97,7 @@
             id: 'Black',
             img: 'black.jpg',
             title: 'Black',
-            text: '',
+            text: "Black coffee is a simple, straightforward coffee made without any added milk, cream, or sugar.",
             items: ['Caffeine: Approximately 95 mg', 'Milk: 0 ml ', 'Sugar: 0 g'],
             calories: 5,
             presets:{

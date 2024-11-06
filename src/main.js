@@ -20,6 +20,9 @@ const firebaseConfig = {
     appId: "1:349970863172:web:dc86ab51fe5d0e444c5811"
   };
 
+  //init CORS
+
+
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
 const db = getFirestore(firebaseApp); // Initialize Firestore
