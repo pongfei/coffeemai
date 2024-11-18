@@ -12,7 +12,10 @@
         </div>
 
         <div v-if="isUserLoggedIn" class="profile-container" @click.stop="toggleProfileDropdown">
-          <img src="https://via.placeholder.com/35" alt="Profile" class="profile-image" />
+          <!-- <img src="https://via.placeholder.com/35" alt="Profile" class="profile-image" /> -->
+          <img src="/profile.jpg" alt="Profile" class="profile-image" />
+           <!-- <img src="profile.jpg" alt="Profile" class="profile-image"> -->
+
           <div v-if="showProfileDropdown" class="profile-dropdown">
             <p @click="viewProfile">Profile</p>
             <button class="logout-button" @click="logOut">Logout</button>

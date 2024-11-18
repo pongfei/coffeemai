@@ -1,9 +1,18 @@
 <template>
+
+<!-- <img :src='espresso.jpg' alt="Menu Item Image" class="menu-item-image"> -->
+
   <!-- <p> the drink id is {{ $route.params.id }}</p> -->
   <div v-if="isLoggedIn" class="customize-page">
     <h1>Customize Your Drink</h1>
-    <img :src="imgUrl" alt="Menu Item Image" class="menu-item-image">
+    <!-- <img :src="imgUrl" alt="Menu Item Image" class="menu-item-image"> -->
+    <!-- <img :src="LargestContentfulPaint.png"> -->
+    <!-- <img :src='espresso.jpg' alt="Menu Item Image" class="menu-item-image"> -->
+    <!-- {{ $route.params.img }} -->
     <p>{{ id }}</p>
+    <img src="https://img.freepik.com/premium-vector/cup-coffee-with-words-i-love-you-it_1166763-8437.jpg?w=826" 
+    alt="Description of the image"
+    class="menu-item-image">
 
     <!-- Slider part -->
     <div class="slider-container">
@@ -13,18 +22,16 @@
       <label for="shots">Coffee Shots: {{ shots }}</label>
       <input type="range" id="shots" v-model="shots" min="0" max="5" step="1"/>
 
-      <label for="milk">Milk Level: {{ milk }}</label>
-      <input type="range" id="milk" v-model="milk" min="0" max="5" step="1"/>
+      <!-- <label for="milk">Milk Level: {{ milk }}</label>
+      <input type="range" id="milk" v-model="milk" min="0" max="5" step="1"/> -->
 
-      <!-- <label for="water">Water Level: {{ water }}</label>
-      <input type="range" id="water" v-model="water" min="0" max="5" step="1"/> -->
     </div>
 
     <div class="order"><button @click="placeOrder"> Order </button> </div>
   </div>
-  <div v-else>
+  <!-- <div v-else>
     <p>You need to log in to access this page.</p>
-  </div>
+  </div> -->
 
 </template>
 
@@ -39,7 +46,7 @@ export default {
   data() {
     return {
       id: this.$route.params.id,
-      imgUrl: null,
+      imgUrl: this.$route.params.img,
       sweetness: parseInt(this.$route.query.sweetness),
       shots: parseInt(this.$route.query.shots),
       milk: parseInt(this.$route.query.milk),
@@ -50,6 +57,7 @@ export default {
   },
 
   created() {
+    console.log('this imgUrl',this.imgUrl);
     console.log('Route params:', this.$route.params);
     console.log('Route query:', this.$route.query); 
     this.imgUrl = this.$route.query.img;  
@@ -216,6 +224,16 @@ input[type="range"]::-moz-range-thumb {
 input[type="range"]::-moz-range-thumb:hover {
   background-color: #45a049;
   transform: scale(1.2);
+}
+
+.menu-item-image {
+  width: 100%; /* Ensures the image takes up the full width of its container */
+  height: auto; /* Maintains the aspect ratio */
+  max-height: 300px; /* Limits the maximum height to prevent it from stretching */
+  object-fit: cover; /* Ensures the image fills the container while cropping any overflow */
+  border-radius: 15px; /* Keeps rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
+  margin: 20px 0;
 }
 
 button {

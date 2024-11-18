@@ -8,12 +8,49 @@
         <h2>Create Account</h2>
         <br>
         <p>Sign up to start ordering your favorite coffee</p>
+
+        <!-- email -->
         <div class="input-group">
           <input type="email" class="form-control" placeholder="Email" v-model="formData.email" />
         </div>
+        <!-- password -->
         <div class="input-group">
           <input type="password" class="form-control" placeholder="Password" v-model="formData.password" />
         </div>
+        <!-- confirm password -->
+        <div class="input-group">
+          <input type="password" class="form-control" placeholder="Confirm Password" v-model="formData.confirmPassword" />
+        </div>
+        <!-- health condition -->
+        <label for="healthCondition" class="form-label">Health Condition (If Any)</label>
+        <div class = "input-group">
+          <select name="healthCondition" id="healthCondition" class="form-control"  v-model="formData.healthCondition">
+          <option value="Sleep Disorder">Sleep Disorder</option>
+          <option value="Lactose Intolerance">Lactose Intolerance</option>
+          <option value="Diabetes">Diabetes</option>
+          <option value="High Pressure">High Pressure</option>
+          <option value="Heart Disease">Heart Disease</option>
+          <option value="Diarrhea">Diarrhea</option>
+          <option value="Gas Reflux">Gas Reflux</option>
+          <option value="Liver Disease">Liver Disease</option>
+          </select>
+          </div>
+
+        <!-- preference -->
+        <label for="preference" class="form-label">Preference (If Any)</label>
+        <div class = "input-group">
+          <select name="preference" id="preference" class="form-control"  v-model="formData.preference">
+          <option value="Strong">Strong</option>
+          <option value="Medium">Medium</option>
+          <option value="Light">Light</option>
+          <option value="Sweet">Sweet</option>
+          <option value="Less Sweet">Less Sweet</option>
+          <option value="No Sweet">No Sweet</option>
+          <option value="Creamy">Creamy</option>
+          <option value="No Cream">No Cream</option>
+          </select>
+          </div>
+
         <button class="btn btn-success" @click="signUp">Sign Up</button>
         <div class="login">
           <p>Already have an account? <router-link to="/login">Log In</router-link></p>
@@ -33,30 +70,46 @@
     name: 'SignUp',
     data() {
       return {
-        formData: {
+        formData: { //object to store input
           email: '',
-          password: ''
+          password: '',
+          confirmPassword: '',
+          healthCondition: '',
+          preference:''
         },
         errorMessage: ''
       };
     },
     methods: {
       async signUp() {
+
         const auth = getAuth();
         const db = getFirestore();
+
+        if(this.formData.password != this.formData.confirmPassword){
+          this.errorMessage = "Password Do Not Match"
+          // alert(this.errorMessage);
+          // console.log("mismatch password")
+          return;
+        }
+
         try {
           const userCredential = await createUserWithEmailAndPassword(auth, this.formData.email, this.formData.password);
           const user = userCredential.user;
           const userDocRef = doc(db, 'users', user.uid);
+
           await setDoc(userDocRef, {  
             email: this.formData.email,
-            password: this.formData.password
+            password: this.formData.password,
+            healthCondition: this.formData.healthCondition,
+            preference: this.formData.preference
           });
           console.log('Successfully signed up');
           this.$router.replace('/mainpage');
         } catch (error) {
           this.errorMessage = error.code + '\n' + error.message;
         }
+      
       }
     }
   };
@@ -111,6 +164,9 @@
   
   .input-group {
     width: 100%;
+    display: flex;
+    flex-direction: column; /* Stack the label and dropdown vertically */
+    align-items: center; /* Center align the content horizontally */
     margin-bottom: 20px;
   }
   
@@ -150,9 +206,25 @@
     text-decoration: none;
   }
   
+  .form-label {
+  margin-bottom: 10px; /* Add space below the label */
+  font-size: 16px;
+  color: #666;
+  text-align: center; /* Center the label text */
+}
+
   .error-message {
     margin-top: 20px;
     color: red;
     text-align: center;
   }
+
+  .form-control {
+  width: 100%; /* Adjust the dropdown width */
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
   </style>
