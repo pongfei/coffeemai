@@ -65,6 +65,7 @@
   <script>
   import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
   import { getFirestore, doc, setDoc } from 'firebase/firestore';
+  import CryptoJS from 'crypto-js';
   
   export default {
     name: 'SignUp',
@@ -93,6 +94,8 @@
           return;
         }
 
+        const hashPassword = CryptoJS.MD5(this.formData.password).toString()
+
         try {
           const userCredential = await createUserWithEmailAndPassword(auth, this.formData.email, this.formData.password);
           const user = userCredential.user;
@@ -100,7 +103,8 @@
 
           await setDoc(userDocRef, {  
             email: this.formData.email,
-            password: this.formData.password,
+            // password: this.formData.password,
+            password: hashPassword,
             healthCondition: this.formData.healthCondition,
             preference: this.formData.preference
           });

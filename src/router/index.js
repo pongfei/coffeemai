@@ -7,6 +7,7 @@ import SignUp from '../views/SignUp.vue';
 import WaitingPage from '../views/WaitingPage.vue';
 import UserProfile from '../views/UserProfile.vue';
 import Recommend from '../views/Recommend.vue';
+import MyMenu from '../views/MyMenu.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -56,6 +57,12 @@ const router = createRouter({
       name: 'Recommend',
       component: Recommend,
       meta: { requiresAuth: true }
+    },
+    {
+      path: '/mymenu',
+      name: 'MyMenu',
+      component: MyMenu,
+      meta: {requiresAuth: true}
     }
   ]
 })

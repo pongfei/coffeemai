@@ -13,8 +13,9 @@
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
     "bootstrap-vue": "^2.23.1",
-    "firebase": "^11.0.1",
     "cors": "^2.8.5",
+    "crypto-js": "^4.2.0",
+    "firebase": "^11.0.1",
     "vue": "^3.4.29",
     "vue-router": "^4.3.3"
   },

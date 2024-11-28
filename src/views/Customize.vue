@@ -1,14 +1,10 @@
 <template>
 
-<!-- <img :src='espresso.jpg' alt="Menu Item Image" class="menu-item-image"> -->
 
-  <!-- <p> the drink id is {{ $route.params.id }}</p> -->
+
   <div v-if="isLoggedIn" class="customize-page">
     <h1>Customize Your Drink</h1>
-    <!-- <img :src="imgUrl" alt="Menu Item Image" class="menu-item-image"> -->
-    <!-- <img :src="LargestContentfulPaint.png"> -->
-    <!-- <img :src='espresso.jpg' alt="Menu Item Image" class="menu-item-image"> -->
-    <!-- {{ $route.params.img }} -->
+
     <p>{{ id }}</p>
     <img src="https://img.freepik.com/premium-vector/cup-coffee-with-words-i-love-you-it_1166763-8437.jpg?w=826" 
     alt="Description of the image"
@@ -22,16 +18,11 @@
       <label for="shots">Coffee Shots: {{ shots }}</label>
       <input type="range" id="shots" v-model="shots" min="0" max="5" step="1"/>
 
-      <!-- <label for="milk">Milk Level: {{ milk }}</label>
-      <input type="range" id="milk" v-model="milk" min="0" max="5" step="1"/> -->
 
     </div>
 
     <div class="order"><button @click="placeOrder"> Order </button> </div>
   </div>
-  <!-- <div v-else>
-    <p>You need to log in to access this page.</p>
-  </div> -->
 
 </template>
 
@@ -88,8 +79,6 @@ export default {
         sweetness: this.sweetness,
         shots: this.shots,
         milk: this.milk,
-        // water: this.water,
-        // imgUrl: this.imgUrl,
         timestamp: new Date() // Optional: Add timestamp for order time
       };
 

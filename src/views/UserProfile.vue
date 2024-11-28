@@ -84,7 +84,7 @@ export default {
           //show 
           this.orders = querySnapshot.docs.map((doc) => ({
             // id: doc.id,
-            menu: doc.data().menu, //menu is friom firestore
+            menu: doc.data().menu, //menu is from firestore
             milk: doc.data().milk,
             shot: doc.data().shots,
             sweetness: doc.data().sweetness,
