@@ -36,15 +36,11 @@
           </select>
           </div>
 
-          <label for="Age Group" class="form-label">Age Group</label>
-        <div class = "input-group">
-          <select name="ageGroup" id="ageGroup" class="form-control"  v-model="formData.ageGroup">
-          <option value="4 to 13">4 to 13</option>
-          <option value="14 to 22">14 to 22</option>
-          <option value="23 to 59">23 to 59</option>
-          <option value="60 and up">60 and up</option>
-          </select>
-          </div>
+          <!-- Age -->
+          <div class="input-group">
+          <input type="number" class="form-control" placeholder="Age" v-model="formData.ageGroup" />
+        </div>
+
 
         <!-- preference -->
         <label for="preference" class="form-label">Preference (If Any)</label>
