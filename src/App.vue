@@ -37,7 +37,7 @@ import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { useRouter } from 'vue-router';
 import { getFirestore, doc, setDoc, onSnapshot } from 'firebase/firestore';
 
-// Reactive properties instead of export default
+
 const isUserLoggedIn = ref(false);
 const showProfileDropdown = ref(false);
 const router = useRouter();
@@ -58,21 +58,29 @@ onMounted(() => {
     }
   });
 
+
   // Reset time
+  /*
   window.addEventListener('mousemove', resetIdleTimer);
   window.addEventListener('keydown', resetIdleTimer);
   window.addEventListener('click', resetIdleTimer);
+  */
+  
 });
 
+
 // Clean up event listeners when the component is destroyed just before
+/*
 onUnmounted(() => {
   window.removeEventListener('mousemove', resetIdleTimer);
   window.removeEventListener('keydown', resetIdleTimer);
   window.removeEventListener('click', resetIdleTimer);
   stopTimer();
 });
+*/
 
 // Timer logic
+/*
 function startTimer() {
   stopTimer(); // Clear any existing timer
   timer.value = setInterval(() => {
@@ -83,22 +91,25 @@ function startTimer() {
       logOut(); // Automatically log out when time runs out
     }
   }, 1000); // Run every second
-}
+}*/
 
+/*
 function stopTimer() {
   if (timer.value) {
     clearInterval(timer.value); // Stop the timer
     timer.value = null;
   }
   timeLeft.value = 30; // Reset the timer (can adjust the value)
-}
+}*/
 
+/*
 function resetIdleTimer() {
   stopTimer(); // Reset the timer
   startTimer(); // Start a new timer
-}
+}*/
 
 // Profile dropdown and logout functions
+
 function toggleProfileDropdown() {
   showProfileDropdown.value = !showProfileDropdown.value;
 }
