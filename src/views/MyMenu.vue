@@ -13,14 +13,14 @@
 
             <!-- sweetness Slider -->
             <div class="slider-container">
-                <label for="sweetness">Sweetness Level: {{ newMenu.sweetness }}</label>
+                <label for="sweetness">Sweetness Level: {{ newMenu.sweetness }} %</label>
                 <input
                     type="range"
                     id="sweetness"
                     v-model="newMenu.sweetness"
                     min="0"
-                    max="5"
-                    step="1"
+                    max="150"
+                    step="50"
                 />
 
                 <label for="milk">Milk Level: {{ newMenu.milk }}</label>
@@ -29,7 +29,7 @@
                     id="milk"
                     v-model="newMenu.milk"
                     min="0"
-                    max="5"
+                    max="3"
                     step="1"
                 />
 
@@ -38,8 +38,8 @@
                     type="range"
                     id="shots"
                     v-model="newMenu.shots"
-                    min="0"
-                    max="5"
+                    min="1"
+                    max="3"
                     step="1"
                 />
             </div>
@@ -58,7 +58,7 @@
             <img src="https://img.freepik.com/premium-vector/coffee-cup-cartoon-icon-illustration-food-drink-icon-concept-isolated-flat-cartoon-style_138676-2097.jpg?w=1060" class="card-img-top" alt="Coffee" />
                 <div class="card-body">
                     <h5 class="card-title">{{ menu.title }}</h5>
-                    <p class="card-text">Sweetness: {{ menu.sweetness }}</p>
+                    <p class="card-text">Sweetness: {{ menu.sweetness }} %</p>
                     <p class="card-text">Milk: {{ menu.milk }}</p>
                     <p class="card-text">Shots: {{ menu.shots }}</p>
                     <button class="btn btn-primary" @click="placeOrder(menu.title)">

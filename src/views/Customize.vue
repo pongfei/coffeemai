@@ -1,7 +1,4 @@
 <template>
-
-
-
   <div v-if="isLoggedIn" class="customize-page">
     <h1>Customize Your Drink</h1>
 
@@ -12,12 +9,11 @@
 
     <!-- Slider part -->
     <div class="slider-container">
-      <label for="sweetness">Sweetness Level: {{ sweetness }}</label>
-      <input type="range" id="sweetness" v-model="sweetness" min="0" max="5" step="1"/>
+      <label for="sweetness">Sweetness Level: {{ sweetness }} %</label>
+      <input type="range" id="sweetness" v-model="sweetness" min="0" max="150" step="50"/>
 
       <label for="shots">Coffee Shots: {{ shots }}</label>
-      <input type="range" id="shots" v-model="shots" min="0" max="5" step="1"/>
-
+      <input type="range" id="shots" v-model="shots" min="1" max="3" step="1"/>
 
     </div>
 
@@ -95,8 +91,11 @@ export default {
         const docRef = await addDoc(collection(db, 'orders'), order);
         console.log('Document written with ID: ', docRef.id);
 
-        //send to flask AI part
-        this.recommendMenu //'this' refers to recommentMenu function
+        //to send to pi here
+        const response = await axios.post('http://192.168.112.122:5000/control', { 
+          order: this.order,
+        });
+
 
         // Show alert message 
         alert(`Order placed for ${this.id}. Sweetness: ${this.sweetness}, Shots: ${this.shots}, Milk: ${this.milk}, Water: ${this.water}`);
@@ -118,11 +117,6 @@ export default {
         console.error('Error adding document: ', e);
       }
     },
-    async recommendMenu(){
-      //call flask api for AI part
-    },
-
-
   }
 };
 </script>
