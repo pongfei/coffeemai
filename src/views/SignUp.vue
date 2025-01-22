@@ -21,21 +21,34 @@
         <div class="input-group">
           <input type="password" class="form-control" placeholder="Confirm Password" v-model="formData.confirmPassword" />
         </div>
-        <!-- health condition -->
-        <label for="healthCondition" class="form-label">Health Condition (If Any)</label>
-        <div class = "input-group">
-          <select name="healthCondition" id="healthCondition" class="form-control"  v-model="formData.healthCondition">
-          <option value="Sleep Disorder">Sleep Disorder</option>
-          <option value="Lactose Intolerance">Lactose Intolerance</option>
-          <option value="Diabetes">Diabetes</option>
-          <option value="High Pressure">High Pressure</option>
-          <option value="Heart Disease">Heart Disease</option>
-          <option value="Diarrhea">Diarrhea</option>
-          <option value="Gas Reflux">Gas Reflux</option>
-          <option value="Liver Disease">Liver Disease</option>
-          </select>
-          </div>
 
+       <!-- Health Condition (Checkboxes) -->
+      <label for="healthCondition" class="form-label">Health Condition (If Any)</label>
+      <div class="input-group">
+        <label>
+          <input type="checkbox" value="Sleep Disorder" v-model="formData.healthCondition" /> Sleep Disorder
+        </label>
+        <label>
+          <input type="checkbox" value="Lactose Intolerance" v-model="formData.healthCondition" /> Lactose Intolerance
+        </label>
+        <label>
+          <input type="checkbox" value="Diabetes" v-model="formData.healthCondition" /> Diabetes
+        </label>
+        <label>
+          <input type="checkbox" value="High Pressure" v-model="formData.healthCondition" /> High Pressure
+        </label>
+        <label>
+          <input type="checkbox" value="Heart Disease" v-model="formData.healthCondition" /> Heart Disease
+        </label>
+        <label>
+          <input type="checkbox" value="Gas Reflux" v-model="formData.healthCondition" /> Gas Reflux
+        </label>
+        <label>
+          <input type="checkbox" value="Liver Disease" v-model="formData.healthCondition" /> Liver Disease
+        </label>
+      </div>
+
+      
           <!-- Age -->
           <div class="input-group">
           <input type="number" class="form-control" placeholder="Age" v-model="formData.ageGroup" />
@@ -81,7 +94,7 @@
           email: '',
           password: '',
           confirmPassword: '',
-          healthCondition: '',
+          healthCondition: [],
           ageGroup: '',
           preference:''
         },
@@ -181,6 +194,10 @@
     align-items: center; /* Center align the content horizontally */
     margin-bottom: 20px;
   }
+
+  .input-group input[type="checkbox"] {
+  margin-right: 10px;
+}
   
   .input-group input {
     width: 100%;

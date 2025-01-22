@@ -19,7 +19,9 @@
               <div class="order">
                 <!-- <router-link :to ="{name: 'Customize', params: {id: card.id}}"> Order Now </router-link> -->
                  <!-- send it to customize page -->
-                <router-link :to="{ name: 'Customize', params: { id: card.id, img: card.img  }, query: { img: card.img ,sweetness: card.presets.sweetness, shots: card.presets.shots, milk: card.presets.milk, water: card.presets.water} }" class="order-button">Order Now</router-link>
+                <router-link :to="{ name: 'Customize', params: { id: card.id, img: card.img  }, 
+                query: { img: card.img ,sweetness: card.presets.sweetness, shots: card.presets.shots, milk: card.presets.milk, water: card.presets.water} }"
+                class="order-button">Order Now</router-link>
               </div>
             </div>
           </div>
@@ -45,10 +47,10 @@
             items: ['Milk 0 ml', 'Caffeine 63 mg', 'Sugar 0 ml'],
             calories: 5,
             presets:{
-              sweetness: 0, // No sweetness
+              sweetness: 50, // No sweetness
               shots: 1, // Single shot
               milk: 0, // No milk
-              water: 0 // No additional water
+              water: 1 // No additional water
             }
           },
           {
@@ -57,12 +59,12 @@
             title: 'Cappuccino',
             text: " A Cappuccino is a coffee drink made with equal parts of espresso, steamed milk, and milk foam which will resuls in a rich, creamy beverage flavor. \n \n",
             items: ['Espresso: 30 ml', 'Milk: 60 ml (steamed milk)', 'Sugar: 0-15 g '],
-            calories: 80,
+            calories: 100,
             presets:{
-              sweetness: 2,
+              sweetness: 100,
               shots: 1, 
               milk: 2,
-              water: 0 
+              water: 1
             }
           },
           {
@@ -73,10 +75,10 @@
             items: ['Espresso: 30 ml ', 'Milk: 210 ml (steamed milk)', 'Sugar: 0-15 g'],
             calories: 160,
             presets:{
-              sweetness: 2,
+              sweetness: 100,
               shots: 1, 
               milk: 2,
-              water: 0 
+              water: 1
             }
           },
           {
@@ -87,10 +89,10 @@
             items: ['Espresso: 30 ml', 'Milk: 0 ml', 'Sugar: 0 g'],
             calories: 5,
             presets:{
-              sweetness: 0, 
+              sweetness: 100, 
               shots: 1, 
               milk: 0, 
-              water: 2 
+              water: 1
             }
           },
           {
@@ -102,9 +104,9 @@
             calories: 5,
             presets:{
               sweetness: 0, 
-              shots: 1,
+              shots: 2,
               milk: 0,
-              water: 0 
+              water: 1
             }
           },
         ],
