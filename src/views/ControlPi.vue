@@ -2,9 +2,12 @@
   <template>
     <div>
       <h1>Control Raspberry Pi</h1>
+      <button @click="sendCommand('coffee')">coffee</button>
+      <button @click="sendCommand('sugar')">sugar</button>
+      <button @click="sendCommand('milk')">milk</button>
       <button @click="sendCommand('on')">Turn ON</button>
       <button @click="sendCommand('off')">Turn OFF</button>
-      <button @click="sendCommand('servo')">Servo</button>
+      
   
       <!-- Display success or error messages -->
       <div v-if="responseMessage" class="response">{{ responseMessage }}</div>
@@ -28,7 +31,7 @@
         this.errorMessage = '';    // Clear previous errors
   
         try {
-          const response = await axios.post('http://192.168.58.32:5000/control', { command });
+          const response = await axios.post('http://192.168.1.108:5000/control', { command });
           this.responseMessage = response.data.message; // Show success message
         } catch (error) {
           console.error('Error communicating with Raspberry Pi:', error);

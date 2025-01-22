@@ -4,51 +4,48 @@
 
     <p>{{ id }}</p>
     <img src="https://img.freepik.com/premium-vector/cup-coffee-with-words-i-love-you-it_1166763-8437.jpg?w=826" 
-    alt="Description of the image"
-    class="menu-item-image">
+         alt="Description of the image" class="menu-item-image">
 
     <!-- Slider part -->
     <div class="slider-container">
-      <label for="sweetness">Sweetness Level: {{ sweetness }} %</label>
+      <label for="sweetness">Sweetness Level: {{ sweetness }}%</label>
       <input type="range" id="sweetness" v-model="sweetness" min="0" max="150" step="50"/>
 
       <label for="shots">Coffee Shots: {{ shots }}</label>
       <input type="range" id="shots" v-model="shots" min="1" max="3" step="1"/>
-
     </div>
 
-    <div class="order"><button @click="placeOrder"> Order </button> </div>
-  </div>
+    <div class="order"><button @click="placeOrder">Order</button></div>
 
+    <div v-if="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+  </div>
 </template>
 
 <script>
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useRouter } from 'vue-router';
-import { collection, addDoc, getFirestore } from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
 import { db } from '../main'; // Adjust the path if necessary
+import axios from 'axios';
 
 export default {
   name: 'Customize',
   data() {
     return {
       id: this.$route.params.id,
-      imgUrl: this.$route.params.img,
-      sweetness: parseInt(this.$route.query.sweetness),
-      shots: parseInt(this.$route.query.shots),
-      milk: parseInt(this.$route.query.milk),
-      // water: parseInt(this.$route.query.water),
+      sweetness: parseInt(this.$route.query.sweetness) || 0,
+      shots: parseInt(this.$route.query.shots) || 1,
+      milk: parseInt(this.$route.query.milk) || 0,
+      water: parseInt(this.$route.query.water) || 0,
       isLoggedIn: false,
       auth: getAuth(),
+      errorMessage: '',
     };
   },
 
   created() {
-    console.log('this imgUrl',this.imgUrl);
-    console.log('Route params:', this.$route.params);
-    console.log('Route query:', this.$route.query); 
-    this.imgUrl = this.$route.query.img;  
-    console.log(this.imgUrl) 
     const router = useRouter();
     onAuthStateChanged(this.auth, (user) => {
       if (user) {
@@ -61,46 +58,49 @@ export default {
   },
 
   methods: {
-
     async placeOrder() {
-      const user = this.auth.currentUser; // Get the current user
+      const user = this.auth.currentUser;
       if (!user) {
-        console.error('No user is logged in.');
+        this.errorMessage = 'You must be logged in to place an order.';
         return;
       }
 
-      const order = { // creates order object
-        email: user.email, 
+      const order = {
+        email: user.email,
         menu: this.id,
         sweetness: this.sweetness,
         shots: this.shots,
         milk: this.milk,
-        timestamp: new Date() // Optional: Add timestamp for order time
+        water: this.water,
+        timestamp: new Date(),
       };
 
       try {
-          if (confirm("Do you wish to proceed?")) {
-          // User clicked "OK"
-          console.log("User confirmed.");
-        } else {
-          // User clicked "Cancel"
-          window.location.reload();
+        // Confirm order
+        if (!confirm("Do you wish to proceed?")) {
           console.log("User canceled.");
+          return;
         }
-        // Add the order to the Firestore "orders" collection
-        const docRef = await addDoc(collection(db, 'orders'), order);
-        console.log('Document written with ID: ', docRef.id);
 
-        //to send to pi here
-        const response = await axios.post('http://192.168.112.122:5000/control', { 
-          order: this.order,
+        // Send data to the Flask server
+        const response = await axios.post('http://192.168.1.108:5000/control', {
+          milk: order.milk,
+          sweetness: order.sweetness,
+          shots: order.shots,
+          water: order.water,
         });
 
+        if (response.data.success) {
+          console.log('Flask Response:', response.data.message);
+        } else {
+          throw new Error(response.data.message);
+        }
 
-        // Show alert message 
-        alert(`Order placed for ${this.id}. Sweetness: ${this.sweetness}, Shots: ${this.shots}, Milk: ${this.milk}, Water: ${this.water}`);
+        // Add the order to Firestore
+        const docRef = await addDoc(collection(db, 'orders'), order);
+        console.log('Document written with ID:', docRef.id);
 
-        // Navigate to the waiting page or another route
+        alert('Order placed successfully!');
         this.$router.push({
           name: 'WaitingPage',
           params: { id: this.id },
@@ -108,16 +108,16 @@ export default {
             sweetness: this.sweetness,
             shots: this.shots,
             milk: this.milk,
-            // water: this.water,
-          }
+            water: this.water,
+          },
         });
 
-        console.log("Order details:", order);
-      } catch (e) {
-        console.error('Error adding document: ', e);
+      } catch (error) {
+        console.error('Error placing order:', error);
+        this.errorMessage = 'Failed to place the order. Please try again.';
       }
     },
-  }
+  },
 };
 </script>
 
