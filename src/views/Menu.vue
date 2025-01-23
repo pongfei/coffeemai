@@ -167,11 +167,7 @@
     object-fit: cover;
   }
     
-  .card-img-top {
-    padding: 3%;
-    border-top-left-radius: 50px; border-top-right-radius: 50px;
-  }
-    
+
   .card-equal-height {
     display: flex;
     flex-direction: column;
