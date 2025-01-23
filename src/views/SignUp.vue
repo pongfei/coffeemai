@@ -144,6 +144,8 @@
   .signup-container {
     display: flex;
     height: 100vh;
+    border-radius: 25px;
+    font-family: 'Darker Grotesque';
   }
   
   .image-side {
@@ -165,6 +167,7 @@
     left: 20px;
     color: white;
     font-size: 24px;
+    font-family: 'Darker Grotesque';
   }
   
   .form-side {
@@ -196,8 +199,8 @@
   }
 
   .input-group input[type="checkbox"] {
-  margin-right: 10px;
-}
+    margin-right: 10px;
+  }
   
   .input-group input {
     width: 100%;
