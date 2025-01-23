@@ -127,18 +127,18 @@ body {
   background-size: cover;
   background-position: center;
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: 'Darker Grotesque';
 }
 
 .customize-page {
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: rgba(220, 216, 210, 0.95);
   padding: 20px;
   margin: 50px auto;
   width: 100%;
   max-width: 600px;
   border-radius: 15px;
   text-align: center;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 2px 2px 10px 2px rgba(0, 0, 0, 0.25);
 }
 
 .menu-item-image {
@@ -147,7 +147,7 @@ body {
   max-height: 300px;
   object-fit: cover;
   border-radius: 15px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 2px 2px 10px 2px rgba(0, 0, 0, 0.25);
   margin: 20px 0;
 }
 
@@ -215,7 +215,7 @@ input[type="range"]::-moz-range-thumb:hover {
   max-height: 300px; /* Limits the maximum height to prevent it from stretching */
   object-fit: cover; /* Ensures the image fills the container while cropping any overflow */
   border-radius: 15px; /* Keeps rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
+  box-shadow: inset 2px 2px 10px 2px rgba(0, 0, 0, 0.25);
   margin: 20px 0;
 }
 
