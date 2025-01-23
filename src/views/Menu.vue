@@ -142,9 +142,9 @@
     margin-top: 5%;
     padding-top: 2%;
     padding-bottom: 2%;
-    font: Sans-serif;
+    font: 'Darker Grotesque';
     border-style: solid;
-    border-color: rgb(182, 91, 1);
+    border-color: rgb(37, 22, 6);
     border-radius: 25px;
 
   }
@@ -152,7 +152,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 1%;
+    padding: 5%;
+    background: rgba(220, 216, 210, 0.5);
+    border-radius:120px;
   }
   
   .order {
@@ -164,30 +166,42 @@
     height: 200px;
     object-fit: cover;
   }
-  
+    
+  .card-img-top {
+    padding: 3%;
+    border-top-left-radius: 50px; border-top-right-radius: 50px;
+  }
+    
   .card-equal-height {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 600px;
+    border-radius: 50px;
   }
   
   .order-button {
     display: inline-block;
     text-align: center;
     border: none;
-    border-radius: 2px;
-    background-color: rgb(135, 83, 16);
-    font-size: 12px !important;
+    background: #a08b7c;
+    box-shadow: inset -4px -4px 10px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 25px;
+    font-size: 16px !important;
     font-weight: 600 !important;
-    width: 100%;
-    color: rgb(255, 255, 255);
-    padding: 10px 20px;
+    width: 60%;
+    color: #f7f7f7;
+    padding: 5px 10px;
+  }
+    
+  .card-text{
+    line-height: 80%;
+    height: 100px;
   }
   
   .order-button:hover {
-    color: white;
-    background-color: rgb(74, 46, 25);
+    background: #B9a495;
+    box-shadow: inset 2px 2px 10px 2px rgba(0, 0, 0, 0.25);
   }
   </style>
   
