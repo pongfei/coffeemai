@@ -128,6 +128,8 @@ export default {
   .login-container {
     display: flex;
     height: 100vh;
+    border-radius: 25px;
+    font-family: 'Darker Grotesque';
   }
   
   .image-side {
@@ -206,7 +208,7 @@ export default {
   .login-button {
     width: 100%;
     padding: 10px;
-    background: #28a745;
+    background: #3f9c55;
     color: white;
     border: none;
     border-radius: 4px;
