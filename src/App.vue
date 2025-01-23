@@ -2,7 +2,7 @@
   <div id="app">
     <nav>
       <div class="left">
-        <img src="https://t4.ftcdn.net/jpg/05/14/51/79/360_F_514517927_dXLi1DauUmrCaE3AkElsVgJ1jaYZMcSA.jpg" alt="Expresso logo" />
+        <img src="/logo.png" alt="Expresso logo" />
         <button class="nav-button" @click="menu">Menu</button>
         <button class="nav-button" @click="myMenu">My Menu</button>
       </div>
@@ -166,9 +166,9 @@ function monitorGlobalSession() {
 <style>
 /* Your existing styles */
 body {
-  background-color: white;
+  background-color: d2bfb5;
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: 'Darker Grotesque';
 }
 
 #app {
@@ -190,12 +190,16 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #624410;
-  color: white;
+  background-color: #f7f7f7;
+  color: #f7f7f7;
   padding: 0 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.center{
+  display: center;
+  align-items: center;
+}
 .left,
 .right {
   display: flex;
@@ -212,11 +216,17 @@ nav {
   height: 35px;
   padding: 5px;
 }
+.center img {
+  height: 65px;
+  padding: 5px;
+}
+
 
 .nav-button {
-  background-color: transparent;
-  border: 2px solid #d99800;
-  color: white;
+  font-family: 'Darker Grotesque';
+  background-color: #f7f7f7;
+  border: 2px solid #301b00;
+  color: #301b00;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
@@ -227,16 +237,19 @@ nav {
 }
 
 .nav-button:hover {
-  background-color: #d99800;
-  color: white;
+  background-color: #EBE4DF;
+  color: #301b00;
   transform: scale(1.05);
+  border: 2px solid #301b00;
 }
 
+.join-now{
+  background-color: #301b00;
+  color: #f7f7f7;
+  border: 2px solid #301b00;
+}
 .join-now:hover {
-  background-color: #a77500;
-  padding: 10px;
-  border-radius: 50px;
-  text-decoration: underline;
+  background-color: #e8e4df;
 }
 
 .profile-container {
@@ -275,7 +288,7 @@ nav {
 }
 
 .logout-button {
-  background-color: #ff4d4d;
+  background-color: #ee7a7a;
   border: none;
   color: white;
   padding: 10px;
@@ -286,7 +299,7 @@ nav {
 }
 
 .logout-button:hover {
-  background-color: #e60000;
+  background-color: #ee7a7a;
 }
 
 .content {
