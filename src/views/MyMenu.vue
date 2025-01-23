@@ -239,8 +239,8 @@ async placeOrder(menuTitle) {
 /* Card styling */
 .card {
     border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 24px;
+    box-shadow: inset 2px 2px 10px 2px rgba(0, 0, 0, 0.25);
     transition: transform 0.2s;
 }
 
@@ -252,6 +252,9 @@ async placeOrder(menuTitle) {
     border-radius: 10px 10px 0 0;
     height: 200px;
     object-fit: cover;
+    padding: 3%;
+    border-top-left-radius: 50px; border-top-right-radius: 50px;
+
 }
 
 .card-body {
