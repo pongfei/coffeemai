@@ -52,8 +52,8 @@ export default {
       const user = auth.currentUser; // Get authenticated user
 
       if (user) {
-        const userDocRef = doc(db, 'users', user.uid);
-        const userDoc = await getDoc(userDocRef);
+        const userDocRef = doc(db, 'users', user.uid); //ref to firestore document
+        const userDoc = await getDoc(userDocRef); //fetch from firestore via userDocRef
 
         if (userDoc.exists()) {
           this.user = userDoc.data();
