@@ -1,281 +1,243 @@
 <template>
-    <div class="signup-container">
-      <div class="image-side">
-        <img src="https://img.freepik.com/free-photo/delicious-coffee-beans-cup_23-2150691429.jpg" alt="Coffee" class="background-image" />
-        <p class="quote">"Espress Yourself."</p>
+  <div class="signup-container">
+    <div class="image-side">
+      <img src="https://img.freepik.com/free-photo/delicious-coffee-beans-cup_23-2150691429.jpg"
+           alt="Coffee" class="background-image" />
+      <p class="quote">"Espress Yourself."</p>
+    </div>
+
+    <div class="form-side">
+      <h2>Create Account</h2>
+      <br>
+      <p>Sign up to start ordering your favorite coffee</p>
+
+      <!-- Email -->
+      <div class="input-group">
+        <input type="email" class="form-control" placeholder="Email" v-model="formData.email" />
       </div>
-      <div class="form-side">
-        <h2>Create Account</h2>
-        <br>
-        <p>Sign up to start ordering your favorite coffee</p>
 
-        <!-- email -->
-        <div class="input-group">
-          <input type="email" class="form-control" placeholder="Email" v-model="formData.email" />
-        </div>
-        <!-- password -->
-        <div class="input-group">
-          <input type="password" class="form-control" placeholder="Password" v-model="formData.password" />
-        </div>
-        <!-- confirm password -->
-        <div class="input-group">
-          <input type="password" class="form-control" placeholder="Confirm Password" v-model="formData.confirmPassword" />
-        </div>
+      <!-- Password -->
+      <div class="input-group">
+        <input type="password" class="form-control" placeholder="Password" v-model="formData.password" />
+      </div>
 
-       <!-- Health Condition (Checkboxes) -->
-      <label for="healthCondition" class="checkbox-group" >Health Condition (If Any)</label>
-        <label>
-          <input type="checkbox" value="Sleep Disorder" v-model="formData.healthCondition" /> Sleep Disorder
-        </label>
-        <label>
-          <input type="checkbox" value="Lactose Intolerance" v-model="formData.healthCondition" /> Lactose Intolerance
-        </label>
-        <label>
-          <input type="checkbox" value="Diabetes" v-model="formData.healthCondition" /> Diabetes
-        </label>
-        <label>
-          <input type="checkbox" value="High Pressure" v-model="formData.healthCondition" /> High Pressure
-        </label>
-        <label>
-          <input type="checkbox" value="Heart Disease" v-model="formData.healthCondition" /> Heart Disease
-        </label>
-        <label>
-          <input type="checkbox" value="Gas Reflux" v-model="formData.healthCondition" /> Gas Reflux
-        </label>
-        <label>
-          <input type="checkbox" value="Liver Disease" v-model="formData.healthCondition" /> Liver Disease
-        </label>
+      <!-- Confirm Password -->
+      <div class="input-group">
+        <input type="password" class="form-control" placeholder="Confirm Password" v-model="formData.confirmPassword" />
+      </div>
 
-      
-          <!-- Age -->
-          <div class="input-group">
-          <input type="number" class="form-control" placeholder="Age" v-model="formData.ageGroup" />
-        </div>
+      <!-- Health Condition (Checkboxes) -->
+      <label for="healthCondition" class="form-label">Health Condition (If Any)</label>
+      <div class="checkbox-group">
+        <label><input type="checkbox" value="Sleep Disorder" v-model="formData.healthCondition" /> Sleep Disorder</label>
+        <label><input type="checkbox" value="Lactose Intolerance" v-model="formData.healthCondition" /> Lactose Intolerance</label>
+        <label><input type="checkbox" value="Diabetes" v-model="formData.healthCondition" /> Diabetes</label>
+        <label><input type="checkbox" value="High Pressure" v-model="formData.healthCondition" /> High Pressure</label>
+        <label><input type="checkbox" value="Heart Disease" v-model="formData.healthCondition" /> Heart Disease</label>
+        <label><input type="checkbox" value="Gas Reflux" v-model="formData.healthCondition" /> Gas Reflux</label>
+        <label><input type="checkbox" value="Liver Disease" v-model="formData.healthCondition" /> Liver Disease</label>
+      </div>
 
+      <!-- Age -->
+      <div class="input-group">
+        <input type="number" class="form-control" placeholder="Age" v-model="formData.ageGroup" />
+      </div>
 
-        <!-- preference -->
-        <label for="preference" class="form-label">Preference (Caffein)</label>
-        <div class = "input-group">
-          <select name="preference" id="preference" class="form-control"  v-model="formData.preferenceCaffeine">
+      <!-- Preferences -->
+      <label for="preferenceCaffeine" class="form-label">Preference (Caffeine)</label>
+      <div class="input-group">
+        <select id="preferenceCaffeine" class="form-control" v-model="formData.preferenceCaffeine">
           <option value="Strong">Strong</option>
           <option value="Medium">Medium</option>
           <option value="Light">Light</option>
+        </select>
+      </div>
 
-
-          </select>
-          </div>
-
-          <label for="preference" class="form-label">Preference (Sweet) </label>
-          <div class = "input-group">
-            <select name="preference" id="preference" class="form-control"  v-model="formData.preferenceSweet">
+      <label for="preferenceSweet" class="form-label">Preference (Sweet)</label>
+      <div class="input-group">
+        <select id="preferenceSweet" class="form-control" v-model="formData.preferenceSweet">
           <option value="Sweet">Sweet</option>
           <option value="Less Sweet">Less Sweet</option>
           <option value="No Sweet">No Sweet</option>
-          </select>
-          </div>
+        </select>
+      </div>
 
-          <label for="preference" class="form-label">Preference (Cream) </label>
-          <div class = "input-group">
-            <select name="preference" id="preference" class="form-control"  v-model="formData.preferenceCream">
-            <option value="Creamy">Creamy</option>
-            <option value="No Cream">No Cream</option>
-            </select>
-          </div>
-        
+      <label for="preferenceCream" class="form-label">Preference (Cream)</label>
+      <div class="input-group">
+        <select id="preferenceCream" class="form-control" v-model="formData.preferenceCream">
+          <option value="Creamy">Creamy</option>
+          <option value="No Cream">No Cream</option>
+        </select>
+      </div>
 
-        <button class="btn btn-success" @click="signUp">Sign Up</button>
-        <div class="login">
-          <p>Already have an account? <router-link to="/login">Log In</router-link></p>
-        </div>
-        <div v-if="errorMessage" class="error-message">
-          {{ errorMessage }}
-        </div>
+      <button class="btn btn-success" @click="signUp">Sign Up</button>
+
+      <div class="login">
+        <p>Already have an account? <router-link to="/login">Log In</router-link></p>
+      </div>
+
+      <div v-if="errorMessage" class="error-message">
+        {{ errorMessage }}
       </div>
     </div>
-  </template>
-  
-  <script>
-  import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
-  import { getFirestore, doc, setDoc } from 'firebase/firestore';
-  import CryptoJS from 'crypto-js';
-  
-  export default {
-    name: 'SignUp',
-    data() {
-      return {
-        formData: { //object to store input
-          email: '',
-          password: '',
-          confirmPassword: '',
-          healthCondition: [],
-          ageGroup: '',
-          preferenceCaffeine:'',
-          preferenceSweet:'',
-          preferenceCream:''
-        },
-        errorMessage: ''
-      };
-    },
-    methods: {
-      async signUp() {
+  </div>
+</template>
 
-        const auth = getAuth();
-        const db = getFirestore();
+<script>
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { getFirestore, doc, setDoc } from 'firebase/firestore';
+import CryptoJS from 'crypto-js';
 
-        if(this.formData.password != this.formData.confirmPassword){
-          this.errorMessage = "Password Do Not Match"
-          // alert(this.errorMessage);
-          // console.log("mismatch password")
-          return;
-        }
+export default {
+  name: 'SignUp',
+  data() {
+    return {
+      formData: {
+        email: '',
+        password: '',
+        confirmPassword: '',
+        healthCondition: [],
+        ageGroup: '',
+        preferenceCaffeine: '',
+        preferenceSweet: '',
+        preferenceCream: ''
+      },
+      errorMessage: ''
+    };
+  },
+  methods: {
+    async signUp() {
+      const auth = getAuth();
+      const db = getFirestore();
 
-        const hashPassword = CryptoJS.MD5(this.formData.password).toString()
+      // Validate Password Match
+      if (this.formData.password !== this.formData.confirmPassword) {
+        this.errorMessage = "Passwords do not match";
+        return;
+      }
 
-        try {
-          const userCredential = await createUserWithEmailAndPassword(auth, this.formData.email, this.formData.password);
-          const user = userCredential.user;
-          const userDocRef = doc(db, 'users', user.uid);
+      const hashPassword = CryptoJS.MD5(this.formData.password).toString();
 
-          await setDoc(userDocRef, {  
-            email: this.formData.email,
-            // password: this.formData.password,
-            password: hashPassword,
-            healthCondition: this.formData.healthCondition,
-            ageGroup: this.formData.ageGroup,
-            preference: this.formData.preference
-          });
-          console.log('Successfully signed up');
-          this.$router.replace('/mainpage');
-        } catch (error) {
-          this.errorMessage = error.code + '\n' + error.message;
-        }
-      
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, this.formData.email, this.formData.password);
+        const user = userCredential.user;
+        const userDocRef = doc(db, 'users', user.uid);
+
+        // Save user data to Firestore
+        await setDoc(userDocRef, {  
+          email: this.formData.email,
+          password: hashPassword,
+          healthCondition: this.formData.healthCondition,
+          ageGroup: this.formData.ageGroup,
+          preferences: {
+            caffeine: this.formData.preferenceCaffeine,
+            sweet: this.formData.preferenceSweet,
+            cream: this.formData.preferenceCream
+          }
+        });
+
+        console.log('Successfully signed up');
+        this.$router.replace('/mainpage');
+
+      } catch (error) {
+        console.error("Signup Error:", error);
+        this.errorMessage = error.code + '\n' + error.message;
       }
     }
-  };
-  </script>
-  
-  <style scoped>
-  .signup-container {
-    display: flex;
-    height: 100vh;
   }
-  
-  .image-side {
-    flex: 1;
-    position: relative;
-    background: url('https://img.freepik.com/free-photo/delicious-coffee-beans-cup_23-2150691429.jpg') no-repeat center center;
-    background-size: cover;
-  }
-  
-  .background-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  .quote {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-    color: white;
-    font-size: 24px;
-  }
-  
-  .form-side {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 40px;
-    padding-top: 100px;
-    background: white;
-  }
-  
-  .form-side h2 {
-    margin-bottom: 10px;
-  }
-  
-  .form-side p {
-    margin-bottom: 20px;
-    color: #666;
-  }
-  
-  .input-group {
-    width: 100%;
-    display: flex;
-    flex-direction: column; /* Stack the label and dropdown vertically */
-    align-items: center; /* Center align the content horizontally */
-    margin-bottom: 20px;
-  }
-  .checkbox-group {
+};
+</script>
+
+<style scoped>
+.signup-container {
+  display: flex;
+  height: 100vh;
+}
+
+.image-side {
+  flex: 1;
+  position: relative;
+  background: url('https://img.freepik.com/free-photo/delicious-coffee-beans-cup_23-2150691429.jpg') no-repeat center center;
+  background-size: cover;
+}
+
+.background-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.quote {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  color: white;
+  font-size: 24px;
+}
+
+.form-side {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  padding-top: 100px;
+  background: white;
+}
+
+.form-side h2 {
+  margin-bottom: 10px;
+}
+
+.form-side p {
+  margin-bottom: 20px;
+  color: #666;
+}
+
+.input-group {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.checkbox-group {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 8px; 
+  gap: 8px;
   margin-bottom: 15px;
-  }
+}
 
-  .input-group input[type="checkbox"] {
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #666;
+  cursor: pointer;
+}
+
+.checkbox-group input[type="checkbox"] {
   margin-right: 10px;
 }
-  
-  .input-group input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-sizing: border-box;
-  }
-  
-  .btn {
-    width: 100%;
-    padding: 10px;
-    background: #28a745;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background 0.3s;
-  }
-  
-  .btn:hover {
-    background: #218838;
-  }
-  
-  .login {
-    margin-top: 20px;
-  }
-  
-  .login p {
-    color: #666;
-  }
-  
-  .login a {
-    color: #007bff;
-    text-decoration: none;
-  }
-  
-  .form-label {
-  margin-bottom: 10px; /* Add space below the label */
-  font-size: 16px;
-  color: #666;
-  text-align: center; /* Center the label text */
-}
 
-  .error-message {
-    margin-top: 20px;
-    color: red;
-    text-align: center;
-  }
-
-  .form-control {
-  width: 100%; /* Adjust the dropdown width */
+.btn {
+  width: 100%;
   padding: 10px;
-  border: 1px solid #ddd;
+  background: #28a745;
+  color: white;
+  border: none;
   border-radius: 4px;
-  box-sizing: border-box;
-  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s;
 }
-  </style>
+
+.btn:hover {
+  background: #218838;
+}
+
+.error-message {
+  margin-top: 20px;
+  color: red;
+  text-align: center;
+}
+</style>
