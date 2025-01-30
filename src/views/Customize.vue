@@ -38,7 +38,7 @@ export default {
       sweetness: parseInt(this.$route.query.sweetness) || 0,
       shots: parseInt(this.$route.query.shots) || 1,
       milk: parseInt(this.$route.query.milk) || 0,
-      water: parseInt(this.$route.query.water) || 0,
+      water: parseInt(this.$route.query.water) || 1,
       isLoggedIn: false,
       auth: getAuth(),
       errorMessage: '',
@@ -83,7 +83,7 @@ export default {
         }
 
         // Send data to the Flask server
-        const response = await axios.post('http://192.168.1.108:5000/control', {
+        const response = await axios.post('http://192.168.58.32:5000/control', {
           milk: order.milk,
           sweetness: order.sweetness,
           shots: order.shots,

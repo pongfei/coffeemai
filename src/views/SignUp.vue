@@ -23,8 +23,7 @@
         </div>
 
        <!-- Health Condition (Checkboxes) -->
-      <label for="healthCondition" class="form-label">Health Condition (If Any)</label>
-      <div class="input-group">
+      <label for="healthCondition" class="checkbox-group" >Health Condition (If Any)</label>
         <label>
           <input type="checkbox" value="Sleep Disorder" v-model="formData.healthCondition" /> Sleep Disorder
         </label>
@@ -46,7 +45,6 @@
         <label>
           <input type="checkbox" value="Liver Disease" v-model="formData.healthCondition" /> Liver Disease
         </label>
-      </div>
 
       
           <!-- Age -->
@@ -56,19 +54,34 @@
 
 
         <!-- preference -->
-        <label for="preference" class="form-label">Preference (If Any)</label>
+        <label for="preference" class="form-label">Preference (Caffein)</label>
         <div class = "input-group">
-          <select name="preference" id="preference" class="form-control"  v-model="formData.preference">
+          <select name="preference" id="preference" class="form-control"  v-model="formData.preferenceCaffeine">
           <option value="Strong">Strong</option>
           <option value="Medium">Medium</option>
           <option value="Light">Light</option>
+
+
+          </select>
+          </div>
+
+          <label for="preference" class="form-label">Preference (Sweet) </label>
+          <div class = "input-group">
+            <select name="preference" id="preference" class="form-control"  v-model="formData.preferenceSweet">
           <option value="Sweet">Sweet</option>
           <option value="Less Sweet">Less Sweet</option>
           <option value="No Sweet">No Sweet</option>
-          <option value="Creamy">Creamy</option>
-          <option value="No Cream">No Cream</option>
           </select>
           </div>
+
+          <label for="preference" class="form-label">Preference (Cream) </label>
+          <div class = "input-group">
+            <select name="preference" id="preference" class="form-control"  v-model="formData.preferenceCream">
+            <option value="Creamy">Creamy</option>
+            <option value="No Cream">No Cream</option>
+            </select>
+          </div>
+        
 
         <button class="btn btn-success" @click="signUp">Sign Up</button>
         <div class="login">
@@ -96,7 +109,9 @@
           confirmPassword: '',
           healthCondition: [],
           ageGroup: '',
-          preference:''
+          preferenceCaffeine:'',
+          preferenceSweet:'',
+          preferenceCream:''
         },
         errorMessage: ''
       };
@@ -193,6 +208,13 @@
     flex-direction: column; /* Stack the label and dropdown vertically */
     align-items: center; /* Center align the content horizontally */
     margin-bottom: 20px;
+  }
+  .checkbox-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px; 
+  margin-bottom: 15px;
   }
 
   .input-group input[type="checkbox"] {
