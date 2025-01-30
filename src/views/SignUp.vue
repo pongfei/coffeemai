@@ -47,26 +47,27 @@
       <label for="preferenceCaffeine" class="form-label">Preference (Caffeine)</label>
       <div class="input-group">
         <select id="preferenceCaffeine" class="form-control" v-model="formData.preferenceCaffeine">
-          <option value="Strong">Strong</option>
-          <option value="Medium">Medium</option>
-          <option value="Light">Light</option>
+          <option value=1>Light</option>
+          <option value=2>Medium</option>
+          <option value=3>Strong</option>
         </select>
       </div>
 
       <label for="preferenceSweet" class="form-label">Preference (Sweet)</label>
       <div class="input-group">
         <select id="preferenceSweet" class="form-control" v-model="formData.preferenceSweet">
-          <option value="Sweet">Sweet</option>
-          <option value="Less Sweet">Less Sweet</option>
-          <option value="No Sweet">No Sweet</option>
+          <option value=0>No Sweet</option>
+          <option value=1>Less Sweet</option>
+          <option value=2>Sweet</option>
+          <option value=3>More Sweet</option>
         </select>
       </div>
 
       <label for="preferenceCream" class="form-label">Preference (Cream)</label>
       <div class="input-group">
         <select id="preferenceCream" class="form-control" v-model="formData.preferenceCream">
-          <option value="Creamy">Creamy</option>
-          <option value="No Cream">No Cream</option>
+          <option value=0>No Cream</option>
+          <option value=1>Creamy</option>
         </select>
       </div>
 

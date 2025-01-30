@@ -63,7 +63,7 @@
             presets:{
               sweetness: 100,
               shots: 1, 
-              milk: 2,
+              milk: 1,
               water: 1
             }
           },

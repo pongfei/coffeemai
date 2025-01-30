@@ -6,16 +6,24 @@
     <img src="https://img.freepik.com/premium-vector/cup-coffee-with-words-i-love-you-it_1166763-8437.jpg?w=826" 
          alt="Description of the image" class="menu-item-image">
 
-    <!-- Slider part -->
+    <!-- Slider Controls -->
     <div class="slider-container">
       <label for="sweetness">Sweetness Level: {{ sweetness }}%</label>
       <input type="range" id="sweetness" v-model="sweetness" min="0" max="150" step="50"/>
 
       <label for="shots">Coffee Shots: {{ shots }}</label>
       <input type="range" id="shots" v-model="shots" min="1" max="3" step="1"/>
+
+      <!-- <label for="milk">Milk Level: {{ milk }}</label>
+      <input type="range" id="milk" v-model="milk" min="0" max="3" step="1"/> -->
+
+      <!-- <label for="water">Water Level: {{ water }}</label>
+      <input type="range" id="water" v-model="water" min="1" max="5" step="1"/> -->
     </div>
 
-    <div class="order"><button @click="placeOrder">Order</button></div>
+    <div class="order">
+      <button @click="placeOrder">Order</button>
+    </div>
 
     <div v-if="errorMessage" class="error-message">
       {{ errorMessage }}
@@ -25,9 +33,8 @@
 
 <script>
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { useRouter } from 'vue-router';
 import { collection, addDoc } from "firebase/firestore";
-import { db } from '../main'; // Adjust the path if necessary
+import { db } from '../main';
 import axios from 'axios';
 
 export default {
@@ -35,10 +42,10 @@ export default {
   data() {
     return {
       id: this.$route.params.id,
-      sweetness: parseInt(this.$route.query.sweetness) || 0,
-      shots: parseInt(this.$route.query.shots) || 1,
-      milk: parseInt(this.$route.query.milk) || 0,
-      water: parseInt(this.$route.query.water) || 1,
+      sweetness: this.$route.query.sweetness ? parseInt(this.$route.query.sweetness) : 50,
+      shots: this.$route.query.shots ? parseInt(this.$route.query.shots) : 1,
+      milk: this.$route.query.milk ? parseInt(this.$route.query.milk) : 0,
+      water: this.$route.query.water ? parseInt(this.$route.query.water) : 1,
       isLoggedIn: false,
       auth: getAuth(),
       errorMessage: '',
@@ -46,13 +53,12 @@ export default {
   },
 
   created() {
-    const router = useRouter();
     onAuthStateChanged(this.auth, (user) => {
       if (user) {
         this.isLoggedIn = true;
       } else {
         this.isLoggedIn = false;
-        router.push('/login'); // Redirect to login page if not logged in
+        this.$router.push('/login');
       }
     });
   },
@@ -76,31 +82,25 @@ export default {
       };
 
       try {
-        // Confirm order
         if (!confirm("Do you wish to proceed?")) {
           console.log("User canceled.");
           return;
         }
 
-        // Send data to the Flask server
-        const response = await axios.post('http://192.168.58.32:5000/control', {
+        const response = await axios.post('http://172.20.10.11:5000/control', {
           milk: order.milk,
-          sweetness: order.sweetness,
+          sugar: order.sweetness,  // Fix: Changed from sweetness to sugar
           shots: order.shots,
           water: order.water,
         });
 
-        if (response.data.success) {
-          console.log('Flask Response:', response.data.message);
-        } else {
+        if (!response.data.success) {
           throw new Error(response.data.message);
         }
 
-        // Add the order to Firestore
-        const docRef = await addDoc(collection(db, 'orders'), order);
-        console.log('Document written with ID:', docRef.id);
+        await addDoc(collection(db, 'orders'), order);
+        console.log('Order placed successfully.');
 
-        alert('Order placed successfully!');
         this.$router.push({
           name: 'WaitingPage',
           params: { id: this.id },
