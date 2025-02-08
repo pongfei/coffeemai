@@ -29,7 +29,7 @@
                     id="milk"
                     v-model="newMenu.milk"
                     min="0"
-                    max="3"
+                    max="2"
                     step="1"
                 />
 
@@ -75,6 +75,7 @@ import { collection, addDoc, getDocs, query, where } from "firebase/firestore";
 import { db } from "../main";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "vue-router";
+import axios from "axios";
 
 export default {
     name: "MyMenu",
@@ -82,7 +83,7 @@ export default {
         return {
             newMenu: {
                 title: "",
-                sweetness: 3,
+                sweetness: 100,
                 shots: 1,
                 milk: 0,
             },
@@ -115,7 +116,7 @@ export default {
             const menuWithUserId = {
                 ...this.newMenu,
                 userId: this.userId, // Attach the logged-in user's ID
-            };
+            }
 
             try {
                 const docRef = await addDoc(collection(db, "NewMenu"), menuWithUserId);
@@ -148,14 +149,14 @@ export default {
         resetForm() {
             this.newMenu = {
                 title: "",
-                sweetness: 3,
+                sweetness: 0,
                 shots: 1,
                 milk: 0,
             };
         },
 
 
-async placeOrder(menuTitle) {
+        async placeOrder(menuTitle) {
     const selectedMenu = this.menuItems.find((menu) => menu.title === menuTitle);
     if (!selectedMenu) {
         console.error("Menu not found for title:", menuTitle);
@@ -171,16 +172,28 @@ async placeOrder(menuTitle) {
     }
 
     const order = {
-        // userId: user.uid,
         email: user.email,
         menu: selectedMenu.title,
         sweetness: selectedMenu.sweetness,
         shots: selectedMenu.shots,
         milk: selectedMenu.milk,
-        timestamp: new Date(), // Add a timestamp for the order
+        timestamp: new Date(),
     };
 
     try {
+        // Send data to Raspberry Pi
+        const response = await axios.post('http://192.168.1.102:5001/control', {
+            milk: selectedMenu.milk,
+            sweetness: selectedMenu.sweetness, // Fixed key name
+            shots: selectedMenu.shots,
+            water: 1
+        });
+
+        if (!response.data.success) {
+            throw new Error(response.data.message);
+        }
+
+        // Save order in Firebase Firestore
         const docRef = await addDoc(collection(db, "orders"), order);
         console.log("Order successfully added with ID: ", docRef.id);
         alert(`Order placed for ${selectedMenu.title}!`);

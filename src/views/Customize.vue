@@ -87,9 +87,10 @@ export default {
           return;
         }
 
-        const response = await axios.post('http://172.20.10.11:5000/control', {
+        const response = await axios.post('http://192.168.1.102:5001/control', {
           milk: order.milk,
-          sugar: order.sweetness,  // Fix: Changed from sweetness to sugar
+          // sugar: order.sweetness,  // Fix: Changed from sweetness to sugar
+          sweetness:order.sweetness,
           shots: order.shots,
           water: order.water,
         });
@@ -114,7 +115,7 @@ export default {
 
       } catch (error) {
         console.error('Error placing order:', error);
-        this.errorMessage = 'Failed to place the order. Please try again.';
+        // this.errorMessage = 'Failed to place the order. Please try again.';
       }
     },
   },

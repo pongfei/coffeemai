@@ -99,9 +99,9 @@ export default {
         confirmPassword: '',
         healthCondition: [],
         ageGroup: '',
-        preferenceCaffeine: '',
-        preferenceSweet: '',
-        preferenceCream: ''
+        preferenceCaffeine: '2',
+        preferenceSweet: '2',
+        preferenceCream: '0'
       },
       errorMessage: ''
     };
