@@ -1,10 +1,16 @@
 <template>
-  <div class="user-profile">
-    <h2>User Profile</h2>
-    <br> <br>
+  <div class="heading"><h1> User Profile </h1></div>
+  <div class="user-profile container row mt-4">
     <div class="profile-info">
-      <p><strong>Email:</strong> {{ user.email }}</p>
-      <p><strong>Password:</strong> {{ user.password }}</p>
+      <h3><strong>Email:</strong> {{ user.email }}</h3>
+      <!--<p><strong>Password:</strong> {{ user.password }}</p>-->
+    </div>
+    <hr>
+    <h3>Information</h3>
+    <div class="order">
+      <p><strong>Health Condition:</strong> {{user.healthCondition}}</p>
+      <p><strong>Age:</strong> {{user.ageGroup}}</p>
+      <p><strong>Preferences:</strong> {{user.preferences}}</p>
     </div>
     
     <hr>
@@ -22,6 +28,7 @@
     <div v-else>
       <p>No orders found.</p>
     </div>
+
   </div>
 </template>
 
@@ -107,22 +114,5 @@ export default {
 </script>
 
 <style scoped>
-.user-profile {
-  padding: 20px;
-}
 
-.profile-info {
-  margin-bottom: 20px;
-}
-
-.order {
-  border: 1px solid #ddd;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 4px;
-}
-
-.order p {
-  margin: 5px 0;
-}
 </style>

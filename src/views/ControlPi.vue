@@ -31,7 +31,7 @@
         this.errorMessage = '';    // Clear previous errors
   
         try {
-          const response = await axios.post('http://192.168.1.108:5000/control', { command });
+          const response = await axios.post('http://192.168.58.32:5000/control', { command });
           this.responseMessage = response.data.message; // Show success message
         } catch (error) {
           console.error('Error communicating with Raspberry Pi:', error);

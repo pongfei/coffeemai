@@ -1,32 +1,46 @@
 <template>
-  <div>
-    <h1>Menu Recommendation</h1>
-    
-    <!-- User enters their email -->
-    <input v-model="userEmail" placeholder="Enter your email" />
+  <div class="customize-page mt-5 row">
+    <h1 class="mt-4">Recommend</h1>
 
-    <!-- Button to trigger recommendation fetch -->
-    <button @click="getRecommendation">Get Recommendation</button>
+    <h2>{{coffee.menu}}</h2> 
+    <img
+      src="https://img.freepik.com/premium-vector/cup-coffee-with-words-i-love-you-it_1166763-8437.jpg?w=826"
+      alt="Description of the image"
+      class="menu-item-image"
+    />
 
-    <!-- Display the recommendation from Flask -->
-    <p v-if="recommendation">Recommended Menu: {{ recommendation }}</p>
+    <div class="slider-container">
+      <label for="shots">Coffee Shots: {{ coffee.shots }}</label>
+    </div>
 
-    <!-- Error message if something goes wrong -->
+    <div class="slider-container">
+      <label for="sweetness">Sweetness Level: {{ coffee.sweetness }}</label>
+    </div>
+
+    <button @click="placeOrder" class="order-button">Order</button>
+    <button @click="toMenu" class="button" >Main Menu</button>
+
     <p v-if="errorMessage">{{ errorMessage }}</p>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
-import { getAuth } from 'firebase/auth';
-import { onMounted } from "vue";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { ref, onMounted } from "vue";
+import { getFirestore, doc, getDoc, collection, addDoc } from "firebase/firestore";
+import { db } from "../main";
 
 export default {
+  name: "Recommendation",
   data() {
     return {
-      userEmail: '',          // User's input for the email
-      recommendation: '',     // Recommendation from the backend
-      errorMessage: ''        // Error message if the API call fails
+      userEmail: "",
+      errorMessage: "",
+      coffee: {
+        menu: "",
+        shots: 1,
+        sweetness: 100,
+      },
     };
   },
   methods: {
@@ -35,16 +49,66 @@ export default {
       const user = auth.currentUser;
 
       if (user) {
-        this.userEmail = user.email;  // Correctly assign userEmail using 'this'
+        this.userEmail = user.email;
         console.log("User email: ", this.userEmail);
 
+        const userDoc = await getDoc(doc(db, "recommendations", this.userEmail));
+        if (userDoc.exists()) {
+          this.coffee = userDoc.data() || {};
+        }
       } else {
         console.log("No user found in recommend page");
       }
-    }
+    },
+
+    async placeOrder() {
+      const auth = getAuth();
+      const user = auth.currentUser;
+
+      if (!user) {
+        this.errorMessage = "You must be logged in to place an order.";
+        return;
+      }
+
+      const order = {
+        email: user.email,
+        menu: this.coffee.menu,
+        sweetness: this.coffee.sweetness,
+        shots: this.coffee.shots,
+        timestamp: new Date(),
+      };
+
+      try {
+        if (!confirm("Do you wish to proceed?")) {
+          console.log("User canceled.");
+          return;
+        }
+
+        //pi code here
+
+        await addDoc(collection(db, "orders"), order);
+        console.log("Order placed successfully.");
+        this.$router.replace("/WaitingPage");
+      } catch (error) {
+        console.error("Error placing order:", error);
+        this.errorMessage = "Failed to place the order. Please try again.";
+      }
+    },
+
+    toMenu() {
+      this.$router.replace("/menu");
+    },
   },
   created() {
-    this.fetchUser();  // Use 'created' lifecycle hook to call fetchUser
-  }
+    this.fetchUser();
+  },
 };
 </script>
+
+<style>
+.slider-container {
+  margin: 10px 0;
+}
+
+
+</style>

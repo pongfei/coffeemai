@@ -1,8 +1,9 @@
 <template>
-    <div class="menu-page">
-        <h1> My Menu </h1>
+    <div class="heading"><h1> My Menu </h1></div>
+    <div class="menu-page col-md-4">
 
         <!-- new Menu Form -->
+        <div class="container mt-5">
         <div class="menu-form">
             <input
                 v-model="newMenu.title"
@@ -21,9 +22,10 @@
                     min="0"
                     max="150"
                     step="50"
+                    class="slider"
                 />
 
-                <label for="milk">Milk Level: {{ newMenu.milk }}</label>
+                <label for="milk">Cream Level: {{ newMenu.milk }}</label>
                 <input
                     type="range"
                     id="milk"
@@ -31,6 +33,7 @@
                     min="0"
                     max="2"
                     step="1"
+                    class="slider"
                 />
 
                 <label for="shots">Coffee Shots: {{ newMenu.shots }}</label>
@@ -41,12 +44,13 @@
                     min="1"
                     max="3"
                     step="1"
+                    class="slider"
                 />
             </div>
 
-            <button @click="addMenu" class="btn btn-primary">Add Menu</button>
+            <button @click="addMenu" class="order-button">Add Menu</button>
         </div>
-
+</div>
         <!-- display Menu Cards -->
         <div class="menu-grid">
             <div
@@ -59,7 +63,7 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ menu.title }}</h5>
                     <p class="card-text">Sweetness: {{ menu.sweetness }} %</p>
-                    <p class="card-text">Milk: {{ menu.milk }}</p>
+                    <p class="card-text">Cream: {{ menu.milk }}</p>
                     <p class="card-text">Shots: {{ menu.shots }}</p>
                     <button class="btn btn-primary" @click="placeOrder(menu.title)">
                         Order
@@ -182,7 +186,7 @@ export default {
 
     try {
         // Send data to Raspberry Pi
-        const response = await axios.post('http://192.168.1.102:5001/control', {
+        const response = await axios.post('http://192.168.58.32:5000/control', {
             milk: selectedMenu.milk,
             sweetness: selectedMenu.sweetness, // Fixed key name
             shots: selectedMenu.shots,
@@ -207,80 +211,5 @@ export default {
 </script>
 
 
-<style scoped>
-/* Grid for menu cards */
-.menu-grid {
-    display: flex;
-    flex-wrap: wrap; /* Allows wrapping to the next row if space runs out */
-    justify-content: flex-start; /* Aligns items to the start of the row */
-    gap: 20px; /* Adds spacing between the cards */
-    margin-top: 20px;
-}
 
-/* Page container */
-.menu-page {
-    text-align: center;
-    margin-top: 20px;
-}
 
-/* Form styling */
-.menu-form {
-    margin: 20px auto;
-    width: 100%;
-    max-width: 400px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.form-input {
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-/* Grid for menu cards */
-.menu-grid {
-    display: flex;
-    flex-wrap: wrap; /* Allows wrapping to the next row if space runs out */
-    justify-content: flex-start; /* Aligns items to the start of the row */
-    gap: 20px; /* Adds spacing between the cards */
-    margin-top: 20px;
-}
-
-/* Card styling */
-.card {
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s;
-}
-
-.card:hover {
-    transform: scale(1.05);
-}
-
-.card-img-top {
-    border-radius: 10px 10px 0 0;
-    height: 200px;
-    object-fit: cover;
-}
-
-.card-body {
-    padding: 20px;
-}
-
-.btn-primary {
-    width: 100%;
-    background-color: #624410;
-    border-color: #624410;
-    transition: background-color 0.3s, border-color 0.3s;
-}
-
-.btn-primary:hover {
-    background-color: #c3a500;
-    border-color: #c3a500;
-}
-
-</style>

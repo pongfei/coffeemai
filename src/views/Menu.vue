@@ -1,6 +1,6 @@
 <template>
 
-  <div class= "heading"> <h1> Coffee Mai Menu </h1> 
+  <div class="heading"> <h1> Main Menu </h1> 
   </div>
     <div class="container mt-5">
       <div class="row">
@@ -44,13 +44,13 @@
             img: 'espresso.jpg',
             title: 'Espresso',
             text: "Espresso is a strong, concentrated coffee made by forcing hot water through finely-ground coffee beans, resulting in a rich flavor and creamy foam.",
-            items: ['Milk 0 ml', 'Caffeine 63 mg', 'Sugar 0 ml'],
+            items: ['Cream 0 tsp', 'Coffee 2 tsp', 'Sugar 1 tsp'],
             calories: 5,
             presets:{
-              sweetness: 50, // No sweetness
-              shots: 1, // Single shot
-              milk: 0, // No milk
-              water: 1 // No additional water
+              sweetness: 50, 
+              shots: 2, 
+              milk: 0, 
+              water: 1 
             }
           },
           {
@@ -58,12 +58,12 @@
             img: 'cappucino.jpg',
             title: 'Cappuccino',
             text: " A Cappuccino is a coffee drink made with equal parts of espresso, steamed milk, and milk foam which will resuls in a rich, creamy beverage flavor. \n \n",
-            items: ['Espresso: 30 ml', 'Milk: 60 ml (steamed milk)', 'Sugar: 0-15 g '],
+            items: ['Cream 2 tsp', 'Coffee 1 tsp', 'Sugar 2 tsp'],
             calories: 100,
             presets:{
               sweetness: 100,
               shots: 1, 
-              milk: 1,
+              milk: 2,
               water: 1
             }
           },
@@ -72,7 +72,7 @@
             img: 'latte.jpg',
             title: 'Latte',
             text: "A latte is a coffee drink made with espresso and steamed milk, topped with a small amount of milk foam, offering a smooth and creamy flavor.",
-            items: ['Espresso: 30 ml ', 'Milk: 210 ml (steamed milk)', 'Sugar: 0-15 g'],
+            items: ['Cream 2 tsp', 'Coffee 1 tsp', 'Sugar 2 tsp'],
             calories: 160,
             presets:{
               sweetness: 100,
@@ -86,10 +86,10 @@
             img: 'americano.jpeg',
             title: 'Americano',
             text: "An Americano is a coffee drink made by diluting espresso with hot water, resulting in a milder flavor similar to brewed coffee.",
-            items: ['Espresso: 30 ml', 'Milk: 0 ml', 'Sugar: 0 g'],
+            items: ['Cream 0 tsp', 'Coffee 1 tsp', 'Sugar 0 tsp'],
             calories: 5,
             presets:{
-              sweetness: 100, 
+              sweetness: 0, 
               shots: 1, 
               milk: 0, 
               water: 1
@@ -100,7 +100,7 @@
             img: 'black.jpg',
             title: 'Black',
             text: "Black coffee is a simple, straightforward coffee made without any added milk, cream, or sugar.",
-            items: ['Caffeine: Approximately 95 mg', 'Milk: 0 ml ', 'Sugar: 0 g'],
+            items: ['Cream 0 tsp', 'Coffee 2 tsp', 'Sugar 0 tsp'],
             calories: 5,
             presets:{
               sweetness: 0, 
@@ -137,57 +137,6 @@
   
   <style>
 
-  .heading{
-    text-align: center;
-    margin-top: 5%;
-    padding-top: 2%;
-    padding-bottom: 2%;
-    font: Sans-serif;
-    border-style: solid;
-    border-color: rgb(182, 91, 1);
-    border-radius: 25px;
 
-  }
-  .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 1%;
-  }
-  
-  .order {
-    text-align: center;
-  }
-  
-  .fixed-size {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-  }
-  
-  .card-equal-height {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 600px;
-  }
-  
-  .order-button {
-    display: inline-block;
-    text-align: center;
-    border: none;
-    border-radius: 2px;
-    background-color: rgb(135, 83, 16);
-    font-size: 12px !important;
-    font-weight: 600 !important;
-    width: 100%;
-    color: rgb(255, 255, 255);
-    padding: 10px 20px;
-  }
-  
-  .order-button:hover {
-    color: white;
-    background-color: rgb(74, 46, 25);
-  }
   </style>
   

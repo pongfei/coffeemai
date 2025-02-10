@@ -1,6 +1,7 @@
 <template>
   <div class="waiting-page">
     <h1>Order in Progress</h1>
+    <img src= "/logo.png"/>
     <h2>Your order is being processed. Please wait...</h2>
     <p>________</p>
     <!-- <h4>Estimated Time: {{ formatTime(timeLeft) }}</h4> -->
@@ -64,45 +65,5 @@ export default {
 </script>
 
 <style>
-/* Customize hr styling */
-hr {
-  height: 100px;
-  border: none;  /* Remove the default border */
-  border-top: 5px solid black;
-}
 
-#container {
-  margin-left: 90px;
-  width: 500px;
-  height: 500px;
-}
-
-/* Keyframe animation for spinner */
-@keyframes animation {
-  0% {
-    stroke-dasharray: 1 98;
-    stroke-dashoffset: -105;
-  }
-  50% {
-    stroke-dasharray: 80 10;
-    stroke-dashoffset: -160;
-  }
-  100% {
-    stroke-dasharray: 1 98;
-    stroke-dashoffset: -300;
-  }
-}
-
-#spinner {
-  transform-origin: center;
-  animation-name: animation;
-  animation-duration: 2s;
-  animation-timing-function: cubic-bezier;
-  animation-iteration-count: infinite;
-}
-
-.waiting-page {
-  text-align: center;
-  margin-top: 50px;
-}
 </style>
