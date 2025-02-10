@@ -8,9 +8,10 @@
       </div>
       <div class="right">
         <!-- Timer -->
-        <div class="timer" v-if="timerLogin">
+
+        <!-- <div class="timer" v-if="timerLogin">
           <p>Time Left: {{ timeLeft }} seconds</p>
-        </div>
+        </div> -->
 
         <div v-if="isUserLoggedIn" class="profile-container" @click.stop="toggleProfileDropdown">
           <!-- <img src="https://via.placeholder.com/35" alt="Profile" class="profile-image" /> -->
@@ -43,7 +44,7 @@ const showProfileDropdown = ref(false);
 const router = useRouter();
 
 const timerLogin = ref(true);
-const timeLeft = ref(30); // Set the timer to 10 seconds for testing
+const timeLeft = ref(120); // Set the timer to 10 seconds for testing
 const timer = ref(null);
 
 onMounted(() => {
@@ -53,34 +54,34 @@ onMounted(() => {
       isUserLoggedIn.value = true;
       startTimer();
     } else {
-      isUserLoggedIn.value = false;
+      isUserLoggedIn.value = false
       stopTimer();
     }
   });
 
 
   // Reset time
-  /*
+  
   window.addEventListener('mousemove', resetIdleTimer);
   window.addEventListener('keydown', resetIdleTimer);
   window.addEventListener('click', resetIdleTimer);
-  */
+  
   
 });
 
 
 // Clean up event listeners when the component is destroyed just before
-/*
+
 onUnmounted(() => {
   window.removeEventListener('mousemove', resetIdleTimer);
   window.removeEventListener('keydown', resetIdleTimer);
   window.removeEventListener('click', resetIdleTimer);
   stopTimer();
 });
-*/
+
 
 // Timer logic
-/*
+
 function startTimer() {
   stopTimer(); // Clear any existing timer
   timer.value = setInterval(() => {
@@ -91,22 +92,22 @@ function startTimer() {
       logOut(); // Automatically log out when time runs out
     }
   }, 1000); // Run every second
-}*/
+}
 
-/*
+
 function stopTimer() {
   if (timer.value) {
     clearInterval(timer.value); // Stop the timer
     timer.value = null;
   }
-  timeLeft.value = 30; // Reset the timer (can adjust the value)
-}*/
+  timeLeft.value = 120; // Reset the timer (can adjust the value)
+}
 
-/*
+
 function resetIdleTimer() {
   stopTimer(); // Reset the timer
   startTimer(); // Start a new timer
-}*/
+}
 
 // Profile dropdown and logout functions
 
