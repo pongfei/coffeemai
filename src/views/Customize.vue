@@ -1,10 +1,10 @@
 <template>
-  <div v-if="isLoggedIn" class="customize-page">
+  <div v-if="isLoggedIn" class="customize-page container row">
     <h1 class="mt-4">Customization</h1>
 
     <h2>{{ id }}</h2>
-    <img src="https://img.freepik.com/premium-vector/cup-coffee-with-words-i-love-you-it_1166763-8437.jpg?w=826" 
-         alt="Description of the image" class="menu-item-image">
+    <img src="/coffeecup.jpg" 
+         alt="Coffee" class="menu-item-image">
 
     <!-- Slider Controls -->
     <div class="slider-container">

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <nav>
-      <div class="left ">
+      <div class="left">
         <button class="nav-button" @click="menu">Menu</button>
         <button class="nav-button" @click="myMenu">My Menu</button>
         <button class="nav-button" @click="recommend">Recommend</button>
@@ -176,6 +176,8 @@ function monitorGlobalSession() {
 /* Your existing styles */
 body {
   background-image: url("bg.jpg");
+  background-repeat: repeat-y;
+  background-size: contain;
   margin: 0;
   font-family: 'Darker Grotesque';
   font-size: 18px;
@@ -188,6 +190,8 @@ body {
 }
 
 nav {
+
+  line-height: 75%;
   position: fixed;
   top: 0;
   left: 0;
@@ -219,7 +223,9 @@ nav {
   flex-direction: row-reverse;
   align-items: center;
 }
-
+.wrap{
+  flex-wrap: wrap;
+}
 .timer{
   font-size: large;
   padding-right: 150px;
@@ -245,8 +251,8 @@ nav {
   font-size: 18px;
   font-weight: bold;
   cursor: pointer;
-  padding: 10px 20px;
-  margin-left: 10px;
+  padding: 10px;
+  margin-left: 5px;
   border-radius: 25px;
   transition: background-color 0.3s, color 0.3s, transform 0.3s;
 }
@@ -479,7 +485,7 @@ h1{
   align-items: center;
   text-align: center;
   padding: 5%;
-  background: rgba(220, 216, 210, 0.5);
+  background: url("/cardbg.png");
   border-radius:120px;
 }
 
@@ -747,7 +753,6 @@ h5{
 
 /* Card styling */
 .card {
-  
   border: 2px solid #ddd;
   border-radius: 40px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -766,7 +771,12 @@ h5{
 .card-body {
   padding-inline: 20px;
   text-align: left;
+}
 
+.mycard-body {
+  padding-inline: 20px;
+  text-align: left;
+  height: 100%;
 }
 
 .list-group{

@@ -28,6 +28,8 @@
         </div>
       </div>
     </div>
+    <div class="mt-4"/>
+
   </template>
 
   <script>
@@ -83,7 +85,7 @@
           },
           {
             id: 'Americano',
-            img: 'americano.jpeg',
+            img: 'americano.jpg',
             title: 'Americano',
             text: "An Americano is a coffee drink made by diluting espresso with hot water, resulting in a milder flavor similar to brewed coffee.",
             items: ['Cream 0 tsp', 'Coffee 1 tsp', 'Sugar 0 tsp'],

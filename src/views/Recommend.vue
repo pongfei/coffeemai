@@ -1,11 +1,11 @@
 <template>
-  <div class="customize-page mt-5 row">
+  <div class="customize-page mt-5 container row">
     <h1 class="mt-4">Recommend</h1>
 
     <h2>{{coffee.menu}}</h2> 
     <img
-      src="https://img.freepik.com/premium-vector/cup-coffee-with-words-i-love-you-it_1166763-8437.jpg?w=826"
-      alt="Description of the image"
+      src="/coffeecup.jpg"
+      alt="Coffee"
       class="menu-item-image"
     />
 

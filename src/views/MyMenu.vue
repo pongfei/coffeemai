@@ -1,6 +1,6 @@
 <template>
     <div class="heading"><h1> My Menu </h1></div>
-    <div class="menu-page col-md-4">
+    <div class="menu-page">
 
         <!-- new Menu Form -->
         <div class="container mt-5">
@@ -51,27 +51,26 @@
             <button @click="addMenu" class="order-button">Add Menu</button>
         </div>
 </div>
+<div class="mt-4"/>
         <!-- display Menu Cards -->
-        <div class="menu-grid">
-            <div
-                class="card"
-                style="width: 20rem;"
-                v-for="(menu, index) in menuItems"
-                :key="index"
-            >
-            <img src="https://img.freepik.com/premium-vector/coffee-cup-cartoon-icon-illustration-food-drink-icon-concept-isolated-flat-cartoon-style_138676-2097.jpg?w=1060" class="card-img-top" alt="Coffee" />
-                <div class="card-body">
+        <div class="menu-grid mt-5">
+            <div class="row">
+            <div class="col-md-5" v-for="(menu, index) in menuItems" :key="index">
+            <div class="card">
+                <img src="/coffeecup.jpg" class="card-img-top" alt="Coffee" />
+                <div class="mycard-body card-text">
                     <h5 class="card-title">{{ menu.title }}</h5>
-                    <p class="card-text">Sweetness: {{ menu.sweetness }} %</p>
-                    <p class="card-text">Cream: {{ menu.milk }}</p>
-                    <p class="card-text">Shots: {{ menu.shots }}</p>
-                    <button class="btn btn-primary" @click="placeOrder(menu.title)">
-                        Order
-                    </button>
+                    <p >Sweetness: {{ menu.sweetness }} %</p>
+                    <p >Cream: {{ menu.milk }}</p>
+                    <p >Shots: {{ menu.shots }}</p>
+                    <button class="order-button" @click="placeOrder(menu.title)">Order</button>
                 </div>
+            </div>
+            </div>
             </div>
         </div>
     </div>
+    <div class="mt-4"/>
 </template>
 
 <script>
