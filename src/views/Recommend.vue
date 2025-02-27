@@ -29,6 +29,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { ref, onMounted } from "vue";
 import { getFirestore, doc, getDoc, collection, addDoc } from "firebase/firestore";
 import { db } from "../main";
+import axios from "axios";
 
 export default {
   name: "Recommendation",
@@ -40,6 +41,7 @@ export default {
         menu: "",
         shots: 1,
         sweetness: 100,
+        milk: 0
       },
     };
   },
@@ -76,6 +78,7 @@ export default {
         sweetness: this.coffee.sweetness,
         shots: this.coffee.shots,
         timestamp: new Date(),
+        milk: this.coffee.milk || 0
       };
 
       try {
@@ -85,10 +88,31 @@ export default {
         }
 
         //pi code here
+        const response = await axios.post('http://192.168.58.32:5000/control', {
+          milk: order.milk,
+          sugar: order.sweetness,
+          shots: order.shots,
+        });
+        
+        if (!response.data.success) {
+          throw new Error(response.data.message);
+        }
+
+        this.$router.push({
+          name: 'WaitingPage',
+          params: { id: this.id },
+          query: {
+            sweetness: this.sweetness,
+            shots: this.shots,
+            milk: this.milk,
+            water: this.water,
+          },
+        });
 
         await addDoc(collection(db, "orders"), order);
         console.log("Order placed successfully.");
         this.$router.replace("/WaitingPage");
+
       } catch (error) {
         console.error("Error placing order:", error);
         this.errorMessage = "Failed to place the order. Please try again.";
