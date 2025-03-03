@@ -87,17 +87,6 @@ export default {
           return;
         }
 
-        //pi code here
-        const response = await axios.post('http://192.168.58.32:5000/control', {
-          milk: order.milk,
-          sugar: order.sweetness,
-          shots: order.shots,
-        });
-        
-        if (!response.data.success) {
-          throw new Error(response.data.message);
-        }
-
         this.$router.push({
           name: 'WaitingPage',
           params: { id: this.id },
@@ -109,9 +98,20 @@ export default {
           },
         });
 
+        //pi code here
+        const response = await axios.post('http://192.168.58.32:5000/control', {
+          milk: order.milk,
+          sugar: order.sweetness,
+          shots: order.shots,
+        });
+        
+        if (!response.data.success) {
+          throw new Error(response.data.message);
+        }
+
         await addDoc(collection(db, "orders"), order);
         console.log("Order placed successfully.");
-        this.$router.replace("/WaitingPage");
+        this.$router.replace("/DonePage");
 
       } catch (error) {
         console.error("Error placing order:", error);

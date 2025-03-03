@@ -14,11 +14,6 @@
       <label for="shots">Coffee Shots: {{ shots }}</label>
       <input type="range" id="shots" v-model="shots" min="1" max="3" step="1" class="slider"/>
 
-      <!-- <label for="milk">Milk Level: {{ milk }}</label>
-      <input type="range" id="milk" v-model="milk" min="0" max="3" step="1"/> -->
-
-      <!-- <label for="water">Water Level: {{ water }}</label>
-      <input type="range" id="water" v-model="water" min="1" max="5" step="1"/> -->
     </div>
 
     <div class="order">
@@ -87,21 +82,6 @@ export default {
           return;
         }
 
-        const response = await axios.post('http://192.168.58.32:5000/control', {
-          milk: order.milk,
-          sugar: order.sweetness,  // Fix: Changed from sweetness to sugar
-          // sweetness:order.sweetness,
-          shots: order.shots,
-          // water: order.water,
-        });
-
-        if (!response.data.success) {
-          throw new Error(response.data.message);
-        }
-
-        await addDoc(collection(db, 'orders'), order);
-        console.log('Order placed successfully.');
-
         this.$router.push({
           name: 'WaitingPage',
           params: { id: this.id },
@@ -112,6 +92,20 @@ export default {
             water: this.water,
           },
         });
+
+        const response = await axios.post('http://192.168.58.32:5000/control', {
+          milk: order.milk,
+          sugar: order.sweetness,  
+          shots: order.shots,
+        });
+
+        if (!response.data.success) {
+          throw new Error(response.data.message);
+        }
+
+        await addDoc(collection(db, 'orders'), order);
+        console.log('Order placed successfully.');
+        this.$router.replace("/DonePage");
 
       } catch (error) {
         console.error('Error placing order:', error);

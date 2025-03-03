@@ -104,7 +104,7 @@ function stopTimer() {
     clearInterval(timer.value); // Stop the timer
     timer.value = null;
   }
-  timeLeft.value = 120; // Reset the timer (can adjust the value)
+  timeLeft.value = 600; // Reset the timer (can adjust the value)
 }
 
 

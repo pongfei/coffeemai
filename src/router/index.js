@@ -11,6 +11,7 @@ import UserProfile from '../views/UserProfile.vue';
 import Recommend from '../views/Recommend.vue';
 import MyMenu from '../views/MyMenu.vue';
 import ControlPi from '@/views/ControlPi.vue';
+import DonePage from '../views/DonePage.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -45,6 +46,12 @@ const router = createRouter({
       path: '/WaitingPage',
       name: 'WaitingPage',
       component: WaitingPage,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/DonePage',
+      name: 'DonePage',
+      component: DonePage,
       meta: { requiresAuth: true },
     },
     {

@@ -36,7 +36,7 @@ export default {
   name: 'WaitingPage',
   data() {
     return {
-      timeLeft: 10, // Start the countdown at 120 seconds
+      timeLeft: 100, // Start the countdown at 120 seconds
       showSpinner: true, // Show the spinner initially
     };
   },
