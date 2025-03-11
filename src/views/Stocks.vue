@@ -54,33 +54,6 @@
   </script>
   
   <style>
-  .stock-item {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 10px;
-}
-.stock-count {
-  font-weight: bold;
-  font-size: 18px;
-}
-button {
-  padding: 8px 15px;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-}
-.empty-btn {
-  background-color: red;
-  color: white;
-}
-.max-btn {
-  background-color: green;
-  color: white;
-}
-button:hover {
-  opacity: 0.8;
-}
+  
   </style>
   
