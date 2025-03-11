@@ -60,6 +60,13 @@ export default {
 
   methods: {
     async placeOrder() {
+      //checkcup
+      const response = await axios.post('http://192.168.58.32:5000/checkcup')
+      if (!response.data.success) {
+        alert("Please place a cup");
+        throw new Error(response.data.message);
+      }
+
       const user = this.auth.currentUser;
       if (!user) {
         this.errorMessage = 'You must be logged in to place an order.';

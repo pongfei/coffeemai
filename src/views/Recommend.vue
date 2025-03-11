@@ -20,7 +20,7 @@
     <button @click="placeOrder" class="order-button">Order</button>
     <button @click="toMenu" class="button" >Main Menu</button>
 
-    <p v-if="errorMessage">{{ errorMessage }}</p>
+    <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
   </div>
 </template>
 
@@ -64,6 +64,13 @@ export default {
     },
 
     async placeOrder() {
+      //checkcup
+      const response = await axios.post('http://192.168.58.32:5000/checkcup')
+      if (!response.data.success) {
+        alert("Please place a cup");
+        throw new Error(response.data.message);
+      }
+
       const auth = getAuth();
       const user = auth.currentUser;
 

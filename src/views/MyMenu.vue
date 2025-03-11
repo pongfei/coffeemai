@@ -158,8 +158,14 @@ export default {
             };
         },
 
-
         async placeOrder(menuTitle) {
+            //checkcup
+            const response = await axios.post('http://192.168.58.32:5000/checkcup')
+            if (!response.data.success) {
+            alert("Please place a cup");
+            throw new Error(response.data.message);
+      }
+
     const selectedMenu = this.menuItems.find((menu) => menu.title === menuTitle);
     if (!selectedMenu) {
         console.error("Menu not found for title:", menuTitle);
@@ -184,16 +190,16 @@ export default {
     };
 
     try {
-        this.$router.push({
-          name: 'WaitingPage',
-          params: { id: this.id },
-          query: {
-            sweetness: this.sweetness,
-            shots: this.shots,
-            milk: this.milk,
-            water: this.water,
-          },
-        });
+        // this.$router.push({
+        //   name: 'WaitingPage',
+        //   params: { id: this.id },
+        //   query: {
+        //     sweetness: this.sweetness,
+        //     shots: this.shots,
+        //     milk: this.milk,
+        //     water: this.water,
+        //   },
+        // });
         // Send data to Raspberry Pi
         const response = await axios.post('http://192.168.58.32:5000/control', {
             milk: selectedMenu.milk,
@@ -204,9 +210,19 @@ export default {
         if (!response.data.success) {
             throw new Error(response.data.message);
         }
+        this.$router.push({
+          name: 'WaitingPage',
+          params: { id: this.id },
+          query: {
+            sweetness: this.sweetness,
+            shots: this.shots,
+            milk: this.milk,
+            water: this.water,
+          },
+        });
 
         // Save order in Firebase Firestore
-        const docRef = await addDoc(collection(db, "orders"), order);
+        // const docRef = await addDoc(collection(db, "orders"), order);
         console.log("Order successfully added with ID: ", docRef.id);
         alert(`Order placed for ${selectedMenu.title}!`);
         this.$router.replace("/DonePage");
