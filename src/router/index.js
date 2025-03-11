@@ -72,12 +72,12 @@ const router = createRouter({
       component: MyMenu,
       meta: { requiresAuth: true },
     },
-    {
-      path: '/controlpi',
-      name: 'ControlPi',
-      component: ControlPi,
-      meta: { requiresAuth: true },
-    },
+    // {
+    //   path: '/controlpi',
+    //   name: 'ControlPi',
+    //   component: ControlPi,
+    //   meta: { requiresAuth: true },
+    // },
   ],
 });
 

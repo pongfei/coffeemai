@@ -184,12 +184,21 @@ export default {
     };
 
     try {
+        this.$router.push({
+          name: 'WaitingPage',
+          params: { id: this.id },
+          query: {
+            sweetness: this.sweetness,
+            shots: this.shots,
+            milk: this.milk,
+            water: this.water,
+          },
+        });
         // Send data to Raspberry Pi
         const response = await axios.post('http://192.168.58.32:5000/control', {
             milk: selectedMenu.milk,
-            sweetness: selectedMenu.sweetness, // Fixed key name
+            sugar: selectedMenu.sweetness, // Fixed key name
             shots: selectedMenu.shots,
-            water: 1
         });
 
         if (!response.data.success) {
@@ -200,6 +209,7 @@ export default {
         const docRef = await addDoc(collection(db, "orders"), order);
         console.log("Order successfully added with ID: ", docRef.id);
         alert(`Order placed for ${selectedMenu.title}!`);
+        this.$router.replace("/DonePage");
     } catch (error) {
         console.error("Error adding order: ", error);
         alert("Failed to place the order. Please try again.");
