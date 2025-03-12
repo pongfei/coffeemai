@@ -6,7 +6,7 @@
           <h2>{{ product }}</h2>
           <span>Stock: {{ stock }}</span>
           <button @click="updateStock(product, 0)">Empty</button>
-          <button @click="updateStock(product, 10)">Max</button>
+          <button @click="updateStock(product, product === 'water' ? 3 : 40)">Max</button>
         </div>
       </div>
     </div>

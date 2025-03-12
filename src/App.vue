@@ -5,6 +5,7 @@
         <button class="nav-button" @click="menu">Menu</button>
         <button class="nav-button" @click="myMenu">My Menu</button>
         <button class="nav-button" @click="recommend">Recommend</button>
+        <button class="nav-button" @click="stock">Stocks</button>
 
       </div>
       <div class="center">
@@ -41,6 +42,7 @@ import { ref, onMounted, onUnmounted } from 'vue';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import { useRouter } from 'vue-router';
 import { getFirestore, doc, setDoc, onSnapshot } from 'firebase/firestore';
+import Stocks from './views/Stocks.vue';
 
 
 const isUserLoggedIn = ref(false);
@@ -156,6 +158,10 @@ function myMenu(){
 
 function recommend(){
   router.push('/Recommend')
+}
+
+function stock(){
+  router.push('/Stocks')
 }
 
 // Monitor global session (if needed for your use case)
