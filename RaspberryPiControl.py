@@ -229,7 +229,7 @@ def control():
         temp = get_temp(adc_val)
         #print("Temp: {:.2f} C".format(temp))
         
-        #GPIO.output(waterpin, GPIO.HIGH)
+        GPIO.output(waterpin, GPIO.HIGH)
         print("start water")
         sleep(30)
         GPIO.output(waterpin, GPIO.LOW)

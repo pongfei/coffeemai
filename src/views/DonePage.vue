@@ -5,6 +5,7 @@
       <h2>Your order is done. Enjoy your coffee(mai)!</h2>
       <p>________</p>
      <hr>
+     <!-- <button @click="logOut">Received</button> -->
     </div>
   
     <div class="mt-4"/>
@@ -13,7 +14,9 @@
   <script>
   export default {
     name: 'DonePage'
+    
   };
+  
   </script>
   
   <style>

@@ -60,12 +60,12 @@
             img: 'cappucino.jpg',
             title: 'Cappuccino',
             text: " A Cappuccino is a coffee drink made with equal parts of espresso, steamed milk, and milk foam which will resuls in a rich, creamy beverage flavor. \n \n",
-            items: ['Cream 2 tsp', 'Coffee 1 tsp', 'Sugar 2 tsp'],
+            items: ['Cream 1 tsp', 'Coffee 1 tsp', 'Sugar 2 tsp'],
             calories: 100,
             presets:{
               sweetness: 100,
               shots: 1, 
-              milk: 2,
+              milk: 1,
               water: 1
             }
           },
