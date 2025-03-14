@@ -1,10 +1,10 @@
 <template>
-  <div v-if="isLoggedIn" class="customize-page">
+  <div v-if="isLoggedIn" class="customize-page container row">
     <h1 class="mt-4">Customization</h1>
 
     <h2>{{ id }}</h2>
-    <img src="https://img.freepik.com/premium-vector/cup-coffee-with-words-i-love-you-it_1166763-8437.jpg?w=826" 
-         alt="Description of the image" class="menu-item-image">
+    <img src="/coffeecup.jpg" 
+         alt="Coffee" class="menu-item-image">
 
     <!-- Slider Controls -->
     <div class="slider-container">
@@ -14,11 +14,6 @@
       <label for="shots">Coffee Shots: {{ shots }}</label>
       <input type="range" id="shots" v-model="shots" min="1" max="3" step="1" class="slider"/>
 
-      <!-- <label for="milk">Milk Level: {{ milk }}</label>
-      <input type="range" id="milk" v-model="milk" min="0" max="3" step="1"/> -->
-
-      <!-- <label for="water">Water Level: {{ water }}</label>
-      <input type="range" id="water" v-model="water" min="1" max="5" step="1"/> -->
     </div>
 
     <div class="order">
@@ -33,7 +28,7 @@
 
 <script>
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { collection, addDoc } from "firebase/firestore";
+import { getFirestore, doc, getDoc, collection, addDoc, writeBatch } from "firebase/firestore";
 import { db } from '../main';
 import axios from 'axios';
 
@@ -49,6 +44,12 @@ export default {
       isLoggedIn: false,
       auth: getAuth(),
       errorMessage: '',
+      stocks: {
+        coffee: 0,
+        sugar: 0,
+        cream: 0,
+        water: 0
+      }
     };
   },
 
@@ -61,10 +62,59 @@ export default {
         this.$router.push('/login');
       }
     });
+    this.fetchStocks();
   },
 
   methods: {
+    async fetchStocks() {
+      let updatedStocks = { ...this.stocks }; // Clone to ensure reactivity
+
+      for (const product of Object.keys(updatedStocks)) {
+        const docRef = doc(db, "stocks", product);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          updatedStocks[product] = docSnap.data().stock; // Update cloned object
+        } else {
+          await setDoc(docRef, { stock: 0 });
+          updatedStocks[product] = 0;
+        }
+      }
+      this.stocks = updatedStocks; // Assign new object to trigger reactivity
+      console.log("Updated stock data:", this.stocks);
+  },
+    async updateStocks(order) {
+      const batch = writeBatch(db); // Create batch for multiple updates
+
+      // Compute new stock values
+      const newStockLevels = {
+        coffee: Math.max(0, this.stocks.coffee - order.shots),
+        sugar: Math.max(0, this.stocks.sugar - order.sweetness / 50),
+        cream: Math.max(0, this.stocks.cream - order.milk),
+        water: Math.max(0, this.stocks.water - 1) // Assuming 1 unit of water per cup
+      };
+
+      // Update Firestore stock documents
+      for (const [product, newStock] of Object.entries(newStockLevels)) {
+        const docRef = doc(db, "stocks", product);
+        batch.update(docRef, { stock: newStock });
+      }
+
+      // Commit batch update
+      await batch.commit();
+
+      // Update local state
+      this.stocks = { ...newStockLevels };
+    },
+
     async placeOrder() {
+      //checkcup
+      const response = await axios.post('http://192.168.58.32:5000/checkcup')
+      if (!response.data.success) {
+        alert("Please place a cup");
+        throw new Error(response.data.message);
+      }
+
       const user = this.auth.currentUser;
       if (!user) {
         this.errorMessage = 'You must be logged in to place an order.';
@@ -81,26 +131,32 @@ export default {
         timestamp: new Date(),
       };
 
+      // Check if stock is sufficient before order
+      await this.fetchStocks();
+      if (this.stocks.coffee < order.shots) {
+        alert("Not enough coffee stock!");
+        return;
+      }
+      if (this.stocks.sugar < order.sweetness / 50) {
+        alert("Not enough sugar stock!");
+        return;
+      }
+      if (this.stocks.cream < order.milk) {
+        alert("Not enough cream stock!");
+        return;
+      }
+      if (this.stocks.water < 1) {
+        alert("Not enough water stock!");
+        return;
+      } 
+
       try {
         if (!confirm("Do you wish to proceed?")) {
           console.log("User canceled.");
           return;
         }
-
-        const response = await axios.post('http://192.168.58.32:5000/control', {
-          milk: order.milk,
-          sugar: order.sweetness,  // Fix: Changed from sweetness to sugar
-          // sweetness:order.sweetness,
-          shots: order.shots,
-          // water: order.water,
-        });
-
-        if (!response.data.success) {
-          throw new Error(response.data.message);
-        }
-
-        await addDoc(collection(db, 'orders'), order);
-        console.log('Order placed successfully.');
+        // Deduct ingredients from stock
+        await this.updateStocks(order);
 
         this.$router.push({
           name: 'WaitingPage',
@@ -112,6 +168,20 @@ export default {
             water: this.water,
           },
         });
+
+        const response = await axios.post('http://192.168.58.32:5000/control', {
+          milk: order.milk,
+          sugar: order.sweetness,  
+          shots: order.shots,
+        });
+
+        if (!response.data.success) {
+          throw new Error(response.data.message);
+        }
+
+        // await addDoc(collection(db, 'orders'), order);
+        console.log('Order placed successfully.');
+        this.$router.replace("/DonePage");
 
       } catch (error) {
         console.error('Error placing order:', error);

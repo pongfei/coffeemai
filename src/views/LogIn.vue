@@ -79,7 +79,7 @@ export default {
 
         // Update global session tracker
         await setDoc(globalSessionRef, { isLoggedIn: true, email: this.formData.email }, { merge: true });
-
+        
         // Redirect to the menu page
         this.$router.replace('/Recommend');
       } catch (error) {

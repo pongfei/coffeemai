@@ -11,6 +11,8 @@ import UserProfile from '../views/UserProfile.vue';
 import Recommend from '../views/Recommend.vue';
 import MyMenu from '../views/MyMenu.vue';
 import ControlPi from '@/views/ControlPi.vue';
+import DonePage from '../views/DonePage.vue';
+import Stocks from '@/views/Stocks.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -48,6 +50,12 @@ const router = createRouter({
       meta: { requiresAuth: true },
     },
     {
+      path: '/DonePage',
+      name: 'DonePage',
+      component: DonePage,
+      meta: { requiresAuth: true },
+    },
+    {
       path: '/UserProfile',
       name: 'UserProfile',
       component: UserProfile,
@@ -69,6 +77,12 @@ const router = createRouter({
       path: '/controlpi',
       name: 'ControlPi',
       component: ControlPi,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/stocks',
+      name: 'stocks',
+      component: Stocks,
       meta: { requiresAuth: true },
     },
   ],
