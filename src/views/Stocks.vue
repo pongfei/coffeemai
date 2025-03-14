@@ -1,15 +1,16 @@
 <template>
-  <div>
+  <div class="container mt-5 row" style="width: 800px; padding-top: 0px; ">
     <h1 class="heading">Ingredient Status</h1>
       <div>
         <div v-for="(stock, product) in stocks" :key="product">
           <h2>{{ product }}</h2>
-          <span>Stock: {{ stock }}</span>
-          <button @click="updateStock(product, 0)">Empty</button>
-          <button @click="updateStock(product, product === 'water' ? 3 : 40)">Max</button>
+          <span>Stock: {{ stock }}</span><br>
+          <button @click="updateStock(product, 0)" class="button" style="width: 40%">Empty</button>
+          <button @click="updateStock(product, product === 'water' ? 3 : 40)" class="button" style="width: 40%">Max</button>
         </div>
       </div>
     </div>
+    <hr>
   </template>
   
   <script>
