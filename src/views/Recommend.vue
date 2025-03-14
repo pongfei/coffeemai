@@ -37,7 +37,7 @@ export default {
       userEmail: "",
       errorMessage: "",
       coffee: {
-        menu: "",
+        menu: "Espresso",
         shots: 1,
         sweetness: 100,
         milk: 0
