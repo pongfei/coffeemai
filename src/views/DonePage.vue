@@ -1,12 +1,10 @@
 <template>
-  <div class="done-page">
+  <div class="done-page container row">
     <h1>Order Done</h1>
     <img src="/logo.png" />
     <h2>Your order is done. Enjoy your coffee(mai)!</h2>
-    <p>________</p>
-    <hr>
-
-    <button type="button" @click="logOut">I got my order!</button>
+    <!-- <p>________</p> -->
+    <button type="button" class="button" @click="logOut">I got my order!</button>
   </div>
 
   <div class="mt-4" />

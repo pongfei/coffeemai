@@ -71,7 +71,7 @@
         </select>
       </div>
 
-      <button class="btn btn-success" @click="signUp">Sign Up</button>
+      <button class="button" @click="signUp">Sign Up</button>
 
       <div class="login">
         <p>Already have an account? <router-link to="/login">Log In</router-link></p>
