@@ -294,7 +294,7 @@ export default {
       } 
 
       try {
-        await Swal.fire({
+        const { isConfirmed } = await Swal.fire({
           title: "Do you wish to proceed?",
           icon: "warning",
           showCancelButton: true,
@@ -302,10 +302,7 @@ export default {
           cancelButtonText: "Cancel",
         });
 
-        if (result.isConfirmed) {
-          console.log("User confirmed.");
-          // Proceed with your action
-        } else {
+        if (!isConfirmed) {
           console.log("User canceled.");
           return;
         }

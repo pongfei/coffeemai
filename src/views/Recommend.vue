@@ -183,7 +183,7 @@ export default {
       } 
 
       try {
-        await Swal.fire({
+        const { isConfirmed } = await Swal.fire({
           title: "Do you wish to proceed?",
           icon: "warning",
           showCancelButton: true,
@@ -191,13 +191,11 @@ export default {
           cancelButtonText: "Cancel",
         });
 
-        if (result.isConfirmed) {
-          console.log("User confirmed.");
-          // Proceed with your action
-        } else {
+        if (!isConfirmed) {
           console.log("User canceled.");
           return;
         }
+
         // Deduct ingredients from stock
         await this.updateStocks(order);
 
@@ -212,7 +210,6 @@ export default {
           },
         });
 
-        // pi code here
         const response = await axios.post('http://192.168.58.32:5000/control', {
           milk: order.milk,
           sugar: order.sweetness,
