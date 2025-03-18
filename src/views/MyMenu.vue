@@ -79,6 +79,7 @@ import { db } from "../main";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "vue-router";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 export default {
     name: "MyMenu",
@@ -159,7 +160,12 @@ export default {
     },
     async addMenu() {
         if (!this.newMenu.title) {
-            alert("Please enter a menu name!");
+            Swal.fire({
+            title: "Missing Menu Name!",
+            text: "Please enter a menu name!",
+            icon: "warning",
+            confirmButtonText: "OK",
+          });
             return;
         }
 
@@ -209,7 +215,12 @@ export default {
         //checkcup
         const response = await axios.post('http://192.168.58.32:5000/checkcup')
         if (!response.data.success) {
-        alert("Please place a cup");
+            Swal.fire({
+            title: "Missing Cup!",
+            text: "Please place a cup!",
+            icon: "warning",
+            confirmButtonText: "OK",
+          });
         throw new Error(response.data.message);
         }
 
@@ -223,7 +234,11 @@ export default {
         const user = auth.currentUser;
 
         if (!user) {
-            alert("Please log in to place an order.");
+            Swal.fire({
+                title: "Please log in!",
+                icon: "warning",
+                confirmButtonText: "OK",
+            });
             return;
         }
         
@@ -238,28 +253,60 @@ export default {
 
         // Check if stock is sufficient before order
         await this.fetchStocks();
-        if (this.stocks.coffee < order.shots) {
-            alert("Not enough coffee stock!");
-            return;
-        }
-        if (this.stocks.sugar < order.sweetness / 50) {
-            alert("Not enough sugar stock!");
-            return;
-        }
-        if (this.stocks.cream < order.milk) {
-            alert("Not enough cream stock!");
-            return;
-        }
-        if (this.stocks.water < 1) {
-            alert("Not enough water stock!");
-            return;
-        } 
 
-        try {
-            if (!confirm("Do you wish to proceed?")) {
-                console.log("User canceled.");
-                return;
-            }
+        if(this.stocks.coffee < order.shots){
+          Swal.fire({
+            title: "Warning!",
+            text: "Not enough coffee stock!",
+            icon: "warning",
+            confirmButtonText: "OK",
+          });
+          return;
+      }
+      if (this.stocks.sugar < order.sweetness / 50) {
+        Swal.fire({
+            title: "Warning!",
+            text: "Not enough coffee stock!",
+            icon: "warning",
+            confirmButtonText: "OK",
+          });        
+          return;
+      }
+      if (this.stocks.cream < order.milk) {
+        Swal.fire({
+            title: "Warning!",
+            text: "Not enough cream stock!",
+            icon: "warning",
+            confirmButtonText: "OK",
+          });        
+          return;
+      }
+      if (this.stocks.water < 1) {
+        Swal.fire({
+            title: "Warning!",
+            text: "Not enough water stock!",
+            icon: "warning",
+            confirmButtonText: "OK",
+          });        
+          return;
+      } 
+
+      try {
+        await Swal.fire({
+          title: "Do you wish to proceed?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Yes, proceed",
+          cancelButtonText: "Cancel",
+        });
+
+        if (result.isConfirmed) {
+          console.log("User confirmed.");
+          // Proceed with your action
+        } else {
+          console.log("User canceled.");
+          return;
+        }
             // Deduct ingredients from stock
             await this.updateStocks(order);
             
@@ -288,11 +335,20 @@ export default {
             // Save order in Firebase Firestore
             const docRef = await addDoc(collection(db, "orders"), order);
             console.log("Order successfully");
-            alert(`Order placed for ${selectedMenu.title}!`);
+            Swal.fire({
+                title: "Order placed",
+                icon: "warning",
+                confirmButtonText: "OK",
+            });
             this.$router.replace("/DonePage");
         } catch (error) {
             console.error("Error adding order: ", error);
-            alert("Failed to place the order. Please try again.");
+            await Swal.fire({
+                title: "Error",
+                icon: "Failed to place the order. Please try again.",
+                showCancelButton: true,
+                confirmButtonText: "OK",
+            });
         }
 }
     },

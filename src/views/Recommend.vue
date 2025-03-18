@@ -29,6 +29,8 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getFirestore, doc, getDoc, collection, addDoc, writeBatch } from "firebase/firestore";
 import { db } from "../main";
 import axios from "axios";
+import Swal from "sweetalert2";
+
 
 export default {
   name: "Recommendation",
@@ -114,7 +116,12 @@ export default {
       // checkcup
       const response = await axios.post('http://192.168.58.32:5000/checkcup')
       if (!response.data.success) {
-        alert("Please place a cup");
+        Swal.fire({
+              title: "Cup Warning!",
+              text: "Please place a cup!",
+              icon: "warning",
+              confirmButtonText: "OK",
+            });
         throw new Error(response.data.message);
       }
 
@@ -137,25 +144,57 @@ export default {
       
       // Check if stock is sufficient before order
       await this.fetchStocks();
-      if (this.stocks.coffee < order.shots) {
-        alert("Not enough coffee stock!");
-        return;
+  
+      if(this.stocks.coffee < order.shots){
+          Swal.fire({
+            title: "Warning!",
+            text: "Not enough coffee stock!",
+            icon: "warning",
+            confirmButtonText: "OK",
+          });
+          return;
       }
       if (this.stocks.sugar < order.sweetness / 50) {
-        alert("Not enough sugar stock!");
-        return;
+        Swal.fire({
+            title: "Warning!",
+            text: "Not enough coffee stock!",
+            icon: "warning",
+            confirmButtonText: "OK",
+          });        
+          return;
       }
       if (this.stocks.cream < order.milk) {
-        alert("Not enough cream stock!");
-        return;
+        Swal.fire({
+            title: "Warning!",
+            text: "Not enough cream stock!",
+            icon: "warning",
+            confirmButtonText: "OK",
+          });        
+          return;
       }
       if (this.stocks.water < 1) {
-        alert("Not enough water stock!");
-        return;
+        Swal.fire({
+            title: "Warning!",
+            text: "Not enough water stock!",
+            icon: "warning",
+            confirmButtonText: "OK",
+          });        
+          return;
       } 
 
       try {
-        if (!confirm("Do you wish to proceed?")) {
+        await Swal.fire({
+          title: "Do you wish to proceed?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Yes, proceed",
+          cancelButtonText: "Cancel",
+        });
+
+        if (result.isConfirmed) {
+          console.log("User confirmed.");
+          // Proceed with your action
+        } else {
           console.log("User canceled.");
           return;
         }
