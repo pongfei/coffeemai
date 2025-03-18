@@ -1,6 +1,7 @@
 <template>
+    <hr>
     <div class="heading"><h1> My Menu </h1></div>
-    <div class="menu-page">
+    <div class="menu-page center">
 
         <!-- new Menu Form -->
         <div class="container mt-5">
@@ -53,23 +54,24 @@
 </div>
 <div class="mt-4"/>
         <!-- display Menu Cards -->
-        <div class="menu-grid mt-5">
+        
+    </div>
+    <div class="menu-grid col-md-12">
             <div class="row">
-            <div class="col-md-5" v-for="(menu, index) in menuItems" :key="index">
-            <div class="card">
+            <div class="col-md-3" v-for="(menu, index) in menuItems" :key="index">
+            <div class="card" style="margin-bottom: 20px;">
                 <img src="/coffeecup.jpg" class="card-img-top" alt="Coffee" />
                 <div class="mycard-body card-text">
                     <h5 class="card-title">{{ menu.title }}</h5>
                     <p >Sweetness: {{ menu.sweetness }} %</p>
                     <p >Cream: {{ menu.milk }}</p>
                     <p >Shots: {{ menu.shots }}</p>
-                    <button class="order-button" @click="placeOrder(menu.title)">Order</button>
+                    <button class="order-button" style="width: 90%;" @click="placeOrder(menu.title)">Order</button>
                 </div>
             </div>
             </div>
             </div>
         </div>
-    </div>
     <div class="mt-4"/>
 </template>
 

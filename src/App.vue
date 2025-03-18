@@ -792,7 +792,7 @@ h5{
 /*signup*/
 .signup-container {
   display: flex;
-  height: 100vh;
+  height: fit-content;
   border-radius: 25px;
   font-family: 'Darker Grotesque';
 }
