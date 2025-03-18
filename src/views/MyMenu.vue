@@ -56,10 +56,10 @@
         <!-- display Menu Cards -->
         
     </div>
-    <div class="menu-grid col-md-12">
+    <div class="menu-grid col-md-12" style="width: 1000px;">
             <div class="row">
             <div class="col-md-3" v-for="(menu, index) in menuItems" :key="index">
-            <div class="card" style="margin-bottom: 20px;">
+            <div class="card" style="margin-bottom: 20px; width: 250px;">
                 <img src="/coffeecup.jpg" class="card-img-top" alt="Coffee" />
                 <div class="mycard-body card-text">
                     <h5 class="card-title">{{ menu.title }}</h5>
